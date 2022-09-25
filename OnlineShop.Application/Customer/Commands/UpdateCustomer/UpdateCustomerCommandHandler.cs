@@ -15,7 +15,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 
     public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customer = new Domain.Entities.Customers.Customer(request.FirstName, request.LastName, request.Address, request.Email, request.PhoneNumber);
+        var customer = new Domain.Entities.Customers.Customer(request.Id, request.FirstName, request.LastName, request.Address, request.Email, request.PhoneNumber);
 
         _customerWriteRepository.Update(customer);
 

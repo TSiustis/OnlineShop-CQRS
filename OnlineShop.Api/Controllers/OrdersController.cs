@@ -11,11 +11,14 @@ namespace OnlineShop.Api.Controllers;
 public class OrdersController : ApiController
 {
     /// <summary>
-    /// Gets an order with specified id.
+    /// Retrieves an order with specified id.
     /// </summary>
     /// <param name="id">Id to search for.</param>
     /// <returns>The order with the specified id</returns>
     [HttpGet("orders/{id:int}")]
+    [ProducesResponseType(typeof(OrderDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<OrderDto>> GetOrder(int id)
     {
         var result = await Mediator.Send(new GetOrderQuery(id));
@@ -24,10 +27,13 @@ public class OrdersController : ApiController
     }
 
     /// <summary>
-    /// Gets the list of all orders.
+    /// Retrieves the list of all orders.
     /// </summary>
     /// <returns>The list of customers.</returns>
     [HttpGet("orders")]
+    [ProducesResponseType(typeof(OrderDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<IList<OrderDto>>> GetOrders()
     {
         var result = await Mediator.Send(new GetOrdersQuery());
@@ -39,8 +45,11 @@ public class OrdersController : ApiController
     /// Creates a new Order.
     /// </summary>
     /// <param name="orderInputDto">Input fields.</param>
-    /// <returns>Order</returns>
+    /// <returns>Order creation return code</returns>
     [HttpPost("orders")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult> AddOrder([FromBody] OrderInputDto orderInputDto)
     {
         await Mediator.Send(new AddOrderCommand(orderInputDto));
@@ -52,8 +61,11 @@ public class OrdersController : ApiController
     /// Updates an existing Order.
     /// </summary>
     /// <param name="orderInputDto">Input fields.</param>
-    /// <returns>Order</returns>
+    /// <returns>Order update return code</returns>
     [HttpPut("orders")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult> UpdateOrder(OrderInputDto orderInputDto)
     {
         await Mediator.Send(new UpdateOrderCommand(orderInputDto));
@@ -65,8 +77,11 @@ public class OrdersController : ApiController
     /// Deletes an existing Order.
     /// </summary>
     /// <param name="id">Id of the order to be deleted.</param>
-    /// <returns>Order</returns>
+    /// <returns>Order deletion return code</returns>
     [HttpDelete("orders/{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult> DeleteOrder(int id)
     {
         await Mediator.Send(new DeleteOrderCommand(id));

@@ -17,7 +17,7 @@ public class OrderUpdatedHandler : INotificationHandler<DomainEventNotification<
 
     public async Task Handle(DomainEventNotification<OrderUpdated> notification, CancellationToken cancellationToken)
     {
-        _readOrderRepository.Update(notification.DomainEvent.Order, cancellationToken);
+        _readOrderRepository.Update(notification.DomainEvent.Order);
 
         await _readOrderRepository.SaveChanges(cancellationToken);
     }

@@ -5,6 +5,7 @@
 
     public class OrderInputDto
     {
+        public int Id { get; set; } 
 
         public ICollection<OrderItemDto> Items { get; set; }
 

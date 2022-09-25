@@ -6,7 +6,7 @@ public interface IReadRepository<TEntity> where TEntity : Entity
 {
     Task Add(TEntity entity, CancellationToken cancellationToken);
 
-    void Update(TEntity entity, CancellationToken cancellationToken);
+    void Update(TEntity entity);
 
     Task<TEntity> Get(int id, CancellationToken cancellationToken);
 

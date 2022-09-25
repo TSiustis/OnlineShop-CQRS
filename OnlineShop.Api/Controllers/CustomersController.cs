@@ -13,12 +13,15 @@ public class CustomersController : ApiController
 {
 
     /// <summary>
-    /// Gets a customer with specified id.
+    /// Retrieves a customer with specified id.
     /// </summary>
     /// <param name="id">Id to search for.</param>
     /// <returns>The customer with the specified id</returns>
     [HttpGet("customers/{id:int}")]
-    public async Task<ActionResult<Customer>> GetCustomer(int id)
+    [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<CustomerDto>> GetCustomer(int id)
     {
         var result = await Mediator.Send(new GetCustomerQuery(id));
 
@@ -26,10 +29,13 @@ public class CustomersController : ApiController
     }
 
     /// <summary>
-    /// Gets the list of all customers.
+    /// Retrieves the list of all customers.
     /// </summary>
     /// <returns>The list of customers.</returns>
     [HttpGet("customers")]
+    [ProducesResponseType(typeof(IList<CustomerDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<IList<CustomerDto>>> GetCustomers()
     {
         var result = await Mediator.Send(new GetCustomersQuery());
@@ -41,8 +47,11 @@ public class CustomersController : ApiController
     /// Creates a new Customer.
     /// </summary>
     /// <param name="customerInputDto">Input fields.</param>
-    /// <returns>Customer</returns>
+    /// <returns>Customer create return code</returns>
     [HttpPost("customers")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult> AddCustomer(CustomerInputDto customerInputDto)
     {
         await Mediator.Send(new AddCustomerCommand(customerInputDto));
@@ -54,8 +63,11 @@ public class CustomersController : ApiController
     /// Updates an existing Customer.
     /// </summary>
     /// <param name="customerInputDto">Input fields.</param>
-    /// <returns>Customer</returns>
+    /// <returns>Customer update return code </returns>
     [HttpPut("customers")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult> UpdateCustomer(CustomerInputDto customerInputDto)
     {
         await Mediator.Send(new UpdateCustomerCommand(customerInputDto));
@@ -67,8 +79,11 @@ public class CustomersController : ApiController
     /// Deletes an existing Customer.
     /// </summary>
     /// <param name="id">Id of the customer to be deleted.</param>
-    /// <returns>Customer</returns>
+    /// <returns>Customer deletion return code</returns>
     [HttpDelete("customers/{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult> DeleteCustomer(int id)
     {
         await Mediator.Send(new DeleteCustomerCommand(id));

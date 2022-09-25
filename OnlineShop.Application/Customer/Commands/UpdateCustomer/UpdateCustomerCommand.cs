@@ -7,6 +7,7 @@ public class UpdateCustomerCommand : IRequest
 {
     public UpdateCustomerCommand(CustomerInputDto customerInput)
     {
+        Id = customerInput.Id;
         FirstName = customerInput.FirstName;
         LastName = customerInput.LastName;
         Address = customerInput.Address;
@@ -14,6 +15,7 @@ public class UpdateCustomerCommand : IRequest
         PhoneNumber = customerInput.PhoneNumber;
     }
 
+    public int Id { get; }
     public string FirstName { get; }
 
     public string LastName { get; }

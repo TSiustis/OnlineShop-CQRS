@@ -19,9 +19,12 @@ public class ProductReadRepository : IReadRepository<Product>
         await _dbContext.Products.AddAsync(product, cancellationToken);
     }
 
-    public void Update(Product product, CancellationToken cancellationToken)
+    public void Update(Product product)
     {
-        _dbContext.Products.Update(product);
+        var productToUpdate = _dbContext.Products.FirstOrDefault(p => p.Id == product.Id);
+        productToUpdate.Name = product.Name;
+
+        _dbContext.Products.Update(productToUpdate);
     }
 
     public async Task<Product> Get(int id, CancellationToken cancellationToken)

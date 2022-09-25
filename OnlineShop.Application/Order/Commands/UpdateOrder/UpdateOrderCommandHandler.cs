@@ -9,17 +9,15 @@ using OnlineShop.Domain.Interfaces;
 public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand>
 {
     private readonly IWriteRepository<Order> _orderRepository;
-    private readonly IMapper _mapper;
 
-    public UpdateOrderCommandHandler(IWriteRepository<Order> orderRepository, IMapper mapper)
+    public UpdateOrderCommandHandler(IWriteRepository<Order> orderRepository)
     {
         _orderRepository = orderRepository;
-        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = new Order(request.ShippedAt, request.Address, request.PaymentType, request.Status, request.Amount);
+        var order = new Order(request.Id, request.ShippedAt, request.Address, request.PaymentType, request.Status, request.Amount);
 
         _orderRepository.Update(order);
 

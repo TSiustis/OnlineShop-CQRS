@@ -1,9 +1,9 @@
-﻿using OnlineShop.Application.Order.Dto;
+﻿
 
 namespace OnlineShop.Application.Order.Commands.UpdateOrder;
 
 using MediatR;
-using OnlineShop.Application.Customer.Dto;
+using OnlineShop.Application.Order.Dto;
 using OnlineShop.Domain.Common;
 using OnlineShop.Domain.Entities.Orders;
 
@@ -11,6 +11,7 @@ public class UpdateOrderCommand : IRequest
 {
     public UpdateOrderCommand(OrderInputDto orderInputDto)
     {
+        Id = orderInputDto.Id;
         Items = orderInputDto.Items;
         ShippedAt = orderInputDto.ShippedAt;
         Address = orderInputDto.Address;
@@ -18,6 +19,8 @@ public class UpdateOrderCommand : IRequest
         PaymentType = orderInputDto.PaymentType;
         Amount = orderInputDto.Amount;
     }
+
+    public int Id { get; set; }
 
     public ICollection<OrderItemDto> Items { get; }
 

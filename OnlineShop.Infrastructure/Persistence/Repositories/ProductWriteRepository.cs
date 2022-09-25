@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OnlineShop.Domain.Entities.Products;
+﻿using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Interfaces;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
 
@@ -20,7 +19,10 @@ public class ProductWriteRepository : IWriteRepository<Product>
 
     public void Update(Product product)
     {
-         _dbContext.Products.Update(product);
+        var productToUpdate = _dbContext.Products.FirstOrDefault(p => p.Id == product.Id);
+        productToUpdate.Name = product.Name;
+
+        _dbContext.Products.Update(productToUpdate);
     }
 
     public async Task SaveChanges(CancellationToken cancellationToken)

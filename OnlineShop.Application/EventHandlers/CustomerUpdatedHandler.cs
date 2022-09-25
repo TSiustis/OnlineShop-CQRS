@@ -15,7 +15,7 @@ public class CustomerUpdatedHandler : INotificationHandler<DomainEventNotificati
 
     public async Task Handle(DomainEventNotification<CustomerUpdated> notification, CancellationToken cancellationToken)
     {
-       _customerReadRepository.Update(notification.DomainEvent.Customer, cancellationToken);
+       _customerReadRepository.Update(notification.DomainEvent.Customer);
 
        await _customerReadRepository.SaveChanges(cancellationToken);
     }

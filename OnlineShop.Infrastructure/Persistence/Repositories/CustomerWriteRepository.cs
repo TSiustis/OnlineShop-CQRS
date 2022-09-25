@@ -20,7 +20,15 @@ public class CustomerWriteRepository : IWriteRepository<Customer>
 
     public void Update(Customer customer)
     {
-       _dbContext.Customers.Update(customer);
+        var customerToUpdate = _dbContext.Customers.FirstOrDefault(c => c.Id == customer.Id);
+
+        customerToUpdate.Address = customer.Address;
+        customerToUpdate.PhoneNumber = customer.PhoneNumber;
+        customerToUpdate.FirstName = customer.FirstName;
+        customerToUpdate.LastName = customer.LastName;
+        customerToUpdate.Email = customer.Email;
+
+       _dbContext.Customers.Update(customerToUpdate);
     }
 
     public async Task SaveChanges(CancellationToken cancellationToken)

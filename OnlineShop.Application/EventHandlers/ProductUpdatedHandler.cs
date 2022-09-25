@@ -16,7 +16,7 @@ public class ProductUpdatedHandler : INotificationHandler<DomainEventNotificatio
 
     public async Task Handle(DomainEventNotification<ProductUpdated> notification, CancellationToken cancellationToken)
     {
-        _productReadRepository.Update(notification.DomainEvent.Product, cancellationToken);
+        _productReadRepository.Update(notification.DomainEvent.Product);
 
         await _productReadRepository.SaveChanges(cancellationToken);
     }

@@ -30,9 +30,19 @@ public class OrderReadRepository : IReadRepository<Order>
             .ToListAsync(cancellationToken);
     }
 
-    public void Update(Order order, CancellationToken cancellationToken)
+    public void Update(Order order)
     {
-        _dbContext.Orders.Update(order);
+        var orderToUpdate = _dbContext.Orders.FirstOrDefault(o => o.Id == order.Id);
+
+        orderToUpdate.Address = order.Address;
+        orderToUpdate.OrderedAt = order.OrderedAt;
+        orderToUpdate.ShippedAt = order.ShippedAt;
+        orderToUpdate.Status = order.Status;
+        orderToUpdate.Items = order.Items;
+        orderToUpdate.Amount = order.Amount;
+        orderToUpdate.PaymentType = order.PaymentType;
+
+        _dbContext.Orders.Update(orderToUpdate);
     }
 
     public async Task SaveChanges(CancellationToken cancellationToken)

@@ -1,4 +1,5 @@
-﻿using OnlineShop.Application.Common.CustomExceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Application.Common.CustomExceptions;
 using OnlineShop.Domain.Entities.Orders;
 using OnlineShop.Domain.Interfaces;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
@@ -20,7 +21,17 @@ public class OrderWriteRepository : IWriteRepository<Order>
 
     public void Update(Order order)
     {
-        _dbContext.Orders.Update(order);
+        var orderToUpdate = _dbContext.Orders.FirstOrDefault(o => o.Id == order.Id);
+
+        orderToUpdate.Address = order.Address;
+        orderToUpdate.OrderedAt = order.OrderedAt;
+        orderToUpdate.ShippedAt = order.ShippedAt;
+        orderToUpdate.Status = order.Status;
+        orderToUpdate.Items = order.Items;
+        orderToUpdate.Amount = order.Amount;
+        orderToUpdate.PaymentType = order.PaymentType;
+
+        _dbContext.Orders.Update(orderToUpdate);
     }
 
     public async Task SaveChanges(CancellationToken cancellationToken)
@@ -30,7 +41,9 @@ public class OrderWriteRepository : IWriteRepository<Order>
 
     public void Delete(int id)
     {
-        var order = _dbContext.Orders.FirstOrDefault(o => o.Id == id);
+        var order = _dbContext.Orders
+            .Include(o => o.Items)  
+            .FirstOrDefault(o => o.Id == id);
 
         if (order == null)
         {

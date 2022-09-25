@@ -56,8 +56,6 @@ builder.Services.AddDbContext<OnlineShopWriteDbContext>(options =>
 }
 );
 
-//builder.Services.AddAutoMapper(typeof(OrderProfile));
-//builder.Services.AddAutoMapper(typeof(ProductProfile));
 builder.Services.AddApplication();
 builder.Services.AddScoped(typeof(IReadRepository<Order>), typeof(OrderReadRepository));
 builder.Services.AddScoped(typeof(IWriteRepository<Order>), typeof(OrderWriteRepository));

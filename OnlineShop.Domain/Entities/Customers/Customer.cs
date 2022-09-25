@@ -27,4 +27,14 @@ public class Customer : Entity, IAggregateRoot, IHasDomainEvent
         Email = email;
         PhoneNumber = phoneNumber;
     }
+
+    public Customer(int id, string firstName, string lastName, Address address, string email, string phoneNumber)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Address = address;
+        Email = email;
+        PhoneNumber = phoneNumber;
+    }
 }
