@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoFixture;
+using Moq;
 using OnlineShop.Application.EventHandlers;
 using OnlineShop.Application.Events;
 using OnlineShop.Domain.Entities.Products;
@@ -10,11 +11,13 @@ namespace OnlineShop.UnitTests.Application.EventHandlers
 {
     public class ProductCreatedHandlerTests
     {
+        private readonly Fixture _fixture = new();
+
         [Fact]
         public async Task Handler_ShouldAddProduct_WhenCalled()
         {
             // Arrange
-            var product = new Product(0, "Test Product");
+            var product = _fixture.Create<Product>();
             var domainEvent = new ProductCreated(product);
             var notification = new DomainEventNotification<ProductCreated>(domainEvent);
             var cancellationToken = CancellationToken.None;

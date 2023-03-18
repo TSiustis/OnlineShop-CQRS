@@ -15,6 +15,17 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(255);
+        
+        builder.Property(p => p.Description)
+            .IsRequired()
+            .HasMaxLength(500);
+
+        builder.Property(p => p.Stock)
+            .IsRequired();
+
+        builder.Property(p => p.Category)
+            .IsRequired()
+            .HasMaxLength(50);
 
         builder.Ignore(p => p.DomainEvents);
     }

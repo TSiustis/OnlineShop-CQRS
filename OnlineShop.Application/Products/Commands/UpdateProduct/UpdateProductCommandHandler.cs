@@ -19,7 +19,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
     }
     public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var product = new Product(request.Id, request.Name);
+        var product = new Product(request.Id, request.Name, request.Description, request.Price, request.Stock, request.Category);
 
         _productWriteRepository.Update(product);
 

@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoFixture;
+using Moq;
 using OnlineShop.Application.EventHandlers;
 using OnlineShop.Application.Events;
 using OnlineShop.Domain.Entities.Products;
@@ -8,32 +9,31 @@ using Xunit;
 
 namespace OnlineShop.UnitTests.Application.EventHandlers
 {
-    internal class ProductUpdatedHandlerTests
+    public class ProductUpdatedHandlerTests
     {
-        public class ProductCreatedHandlerTests
+        private readonly Fixture _fixture = new();
+
+        [Fact]
+        public async Task Handler_ShouldUpdateProduct_WhenCalled()
         {
-            [Fact]
-            public async Task Handler_ShouldUpdateProduct_WhenCalled()
-            {
-                // Arrange
-                var product = new Product(0, "Test Product");
-                var domainEvent = new ProductCreated(product);
-                var notification = new DomainEventNotification<ProductCreated>(domainEvent);
-                var cancellationToken = CancellationToken.None;
+            // Arrange
+            var product = _fixture.Create<Product>();
+            var domainEvent = new ProductUpdated(product);
+            var notification = new DomainEventNotification<ProductUpdated>(domainEvent);
+            var cancellationToken = CancellationToken.None;
 
-                var readRepositoryMock = new Mock<IReadRepository<Product>>();
-                readRepositoryMock.Setup(repo => repo.Update(product)).Verifiable();
-                readRepositoryMock.Setup(repo => repo.SaveChanges(cancellationToken)).Verifiable();
+            var readRepositoryMock = new Mock<IReadRepository<Product>>();
+            readRepositoryMock.Setup(repo => repo.Update(product)).Verifiable();
+            readRepositoryMock.Setup(repo => repo.SaveChanges(cancellationToken)).Verifiable();
 
-                var handler = new ProductCreatedHandler(readRepositoryMock.Object);
+            var handler = new ProductUpdatedHandler(readRepositoryMock.Object);
 
-                // Act
-                await handler.Handle(notification, cancellationToken);
+            // Act
+            await handler.Handle(notification, cancellationToken);
 
-                // Assert
-                readRepositoryMock.Verify(x => x.Update(product), Times.Once);
-                readRepositoryMock.Verify(x => x.SaveChanges(cancellationToken), Times.Once);
-            }
+            // Assert
+            readRepositoryMock.Verify(x => x.Update(product), Times.Once);
+            readRepositoryMock.Verify(x => x.SaveChanges(cancellationToken), Times.Once);
         }
     }
 }
