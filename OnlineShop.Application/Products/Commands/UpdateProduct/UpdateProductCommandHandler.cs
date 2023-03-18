@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿///<summary>
+///Handler for UpdateProductCommand.
+/// </summary>
+using MediatR;
 using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Interfaces;
 

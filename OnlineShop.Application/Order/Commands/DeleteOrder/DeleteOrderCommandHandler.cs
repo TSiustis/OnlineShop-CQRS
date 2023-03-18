@@ -1,4 +1,7 @@
-﻿namespace OnlineShop.Application.Order.Commands.DeleteOrder;
+﻿///<summary>
+///Handler for DeleteOrderCommand.
+/// </summary>
+namespace OnlineShop.Application.Order.Commands.DeleteOrder;
 
 using MediatR;
 using OnlineShop.Domain.Entities.Orders;

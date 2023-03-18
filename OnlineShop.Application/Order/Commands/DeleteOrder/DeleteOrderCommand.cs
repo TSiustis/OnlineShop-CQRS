@@ -1,9 +1,7 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿///<summary>
+///Command for deleting an order.
+/// </summary>
+using MediatR;
 
 namespace OnlineShop.Application.Order.Commands.DeleteOrder;
 public class DeleteOrderCommand : IRequest

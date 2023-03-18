@@ -1,3 +1,6 @@
+///<summary>
+///Domain event to keep the read schema in sync when a order is updated on the write schema.
+/// </summary>
 namespace OnlineShop.Application.EventHandlers;
 
 using MediatR;

@@ -1,4 +1,7 @@
-﻿namespace OnlineShop.Application.Order.Queries.GetOrder
+﻿///<summary>
+///Query for retrieving an order.
+/// </summary>
+namespace OnlineShop.Application.Order.Queries.GetOrder
 {
     using MediatR;
     using OnlineShop.Application.Order.Dto;

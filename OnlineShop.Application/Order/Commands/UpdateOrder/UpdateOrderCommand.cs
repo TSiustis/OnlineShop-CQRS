@@ -1,4 +1,6 @@
-﻿
+﻿///<summary>
+///Command for updating an order.
+/// </summary>
 
 namespace OnlineShop.Application.Order.Commands.UpdateOrder;
 

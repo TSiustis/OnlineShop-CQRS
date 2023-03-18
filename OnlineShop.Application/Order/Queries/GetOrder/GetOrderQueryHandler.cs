@@ -1,4 +1,7 @@
-﻿namespace OnlineShop.Application.Order.Queries.GetOrder;
+﻿///<summary>
+///Handler for retrieving a single order.
+/// </summary>
+namespace OnlineShop.Application.Order.Queries.GetOrder;
 
 using AutoMapper;
 using MediatR;

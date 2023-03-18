@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿///<summary>
+///Handler for DeleteProductCommand.
+/// </summary>
+using MediatR;
 using OnlineShop.Domain.Interfaces;
 
 namespace OnlineShop.Application.Products.Commands.DeleteProduct;

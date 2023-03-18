@@ -1,4 +1,7 @@
-﻿namespace OnlineShop.Application.Events;
+﻿///<summary>
+///Service for raising domain events.
+/// </summary>
+namespace OnlineShop.Application.Events;
 
 using System.Diagnostics;
     using MediatR;

@@ -1,4 +1,7 @@
-﻿using FluentValidation;
+﻿///<summary>
+///Validator for DeleteProductCommandValidator.
+/// </summary>
+using FluentValidation;
 
 namespace OnlineShop.Application.Products.Commands.DeleteProduct;
 public class DeleteProductCommandValidator : AbstractValidator<DeleteProductCommand>

@@ -1,4 +1,7 @@
-﻿namespace OnlineShop.Application.Order.Commands.UpdateOrder;
+﻿///<summary>
+///Validator for UpdateOrderCommand.
+/// </summary>
+namespace OnlineShop.Application.Order.Commands.UpdateOrder;
 
 using FluentValidation;
 

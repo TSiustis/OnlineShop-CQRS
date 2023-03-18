@@ -1,4 +1,7 @@
-﻿using FluentValidation;
+﻿///<summary>
+///Validator for GetProductQuery.
+/// </summary>
+using FluentValidation;
 
 namespace OnlineShop.Application.Products.Queries.GetProduct;
 public class GetProductQueryValidator : AbstractValidator<GetProductQuery>

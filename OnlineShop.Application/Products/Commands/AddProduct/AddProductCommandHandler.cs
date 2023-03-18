@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿///<summary>
+///Handler for AddProductComand.
+/// </summary>
 using MediatR;
 using OnlineShop.Domain.Entities.Products;
-using OnlineShop.Domain.Events;
 using OnlineShop.Domain.Interfaces;
 
 namespace OnlineShop.Application.Products.Commands.AddProduct;

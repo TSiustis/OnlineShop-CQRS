@@ -1,4 +1,7 @@
-﻿using FluentValidation;
+﻿///<summary>
+///Validator for AddProductCommand.
+/// </summary>
+using FluentValidation;
 
 namespace OnlineShop.Application.Products.Commands.AddProduct;
 public class AddProductCommandValidator : AbstractValidator<AddProductCommand>

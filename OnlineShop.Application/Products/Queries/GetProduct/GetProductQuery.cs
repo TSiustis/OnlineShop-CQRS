@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿///<summary>
+///Query for retrieving a product.
+/// </summary>
+using MediatR;
 using OnlineShop.Application.Products.Dto;
 
 namespace OnlineShop.Application.Products.Queries.GetProduct;

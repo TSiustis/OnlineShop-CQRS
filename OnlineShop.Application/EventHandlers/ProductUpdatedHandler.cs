@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿///<summary>
+///Domain event to keep the read schema in sync when a product is updated on the write schema.
+/// </summary>
+using MediatR;
 using OnlineShop.Application.Events;
 using OnlineShop.Domain.Events;
 using OnlineShop.Domain.Interfaces;

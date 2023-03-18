@@ -1,5 +1,7 @@
-﻿using MediatR;
-using OnlineShop.Application.Customer.Dto;
+﻿///<summary>
+///Command for adding an order.
+/// </summary>
+using MediatR;
 using OnlineShop.Application.Order.Dto;
 using OnlineShop.Domain.Common;
 using OnlineShop.Domain.Entities.Orders;

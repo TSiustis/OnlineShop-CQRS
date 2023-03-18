@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿///<summary>
+///Handler for GetProductQuery.
+/// </summary>
+using AutoMapper;
 using MediatR;
 using OnlineShop.Application.Common.CustomExceptions;
 using OnlineShop.Application.Products.Dto;

@@ -1,4 +1,7 @@
-﻿namespace OnlineShop.Application.Order.Queries.GetOrder
+﻿///<summary>
+///Validator for GetOrderQuery.
+/// </summary>
+namespace OnlineShop.Application.Order.Queries.GetOrder
 {
     using FluentValidation;
 

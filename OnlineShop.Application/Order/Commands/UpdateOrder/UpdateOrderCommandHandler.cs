@@ -1,6 +1,8 @@
-﻿namespace OnlineShop.Application.Order.Commands.UpdateOrder;
+﻿///<summary>
+///Handler for UpdateOrderCommand.
+/// </summary>
+namespace OnlineShop.Application.Order.Commands.UpdateOrder;
 
-using AutoMapper;
 using MediatR;
 using OnlineShop.Domain.Events;
 using OnlineShop.Domain.Entities.Orders;

@@ -1,4 +1,7 @@
-﻿namespace OnlineShop.Application.Order.Commands.AddOrder;
+﻿///<summary>
+///Handler for AddOrderCommand.
+/// </summary>
+namespace OnlineShop.Application.Order.Commands.AddOrder;
 
 using AutoMapper;
 using MediatR;

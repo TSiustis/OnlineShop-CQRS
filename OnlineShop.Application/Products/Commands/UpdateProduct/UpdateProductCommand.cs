@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿///<summary>
+///Command for updating a product.
+/// </summary>
+using MediatR;
 using OnlineShop.Application.Products.Dto;
 
 namespace OnlineShop.Application.Products.Commands.UpdateProduct;

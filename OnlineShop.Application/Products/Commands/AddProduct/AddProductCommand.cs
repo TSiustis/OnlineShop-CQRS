@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿///<summary>
+///Command for adding a product.
+/// </summary>
+using MediatR;
 using OnlineShop.Application.Products.Dto;
 
 namespace OnlineShop.Application.Products.Commands.AddProduct;
