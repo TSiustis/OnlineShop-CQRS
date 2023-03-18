@@ -31,7 +31,7 @@ public class UpdateCustomerCommandHandlerTests
         var command = new UpdateCustomerCommand(customerInputDto);
 
         _customerWriteRepositoryMock
-            .Setup(call => call.Update(It.IsAny<Customer>(), It.IsAny<CancellationToken>()))
+            .Setup(call => call.Update(It.IsAny<Customer>()))
             .Verifiable();
 
         _customerWriteRepositoryMock
@@ -46,7 +46,7 @@ public class UpdateCustomerCommandHandlerTests
 
         // Assert
         _customerWriteRepositoryMock.Verify(
-            call => call.Update(It.IsAny<Customer>(), It.IsAny<CancellationToken>()),
+            call => call.Update(It.IsAny<Customer>()),
             Times.Once);
 
         _customerWriteRepositoryMock.Verify(

@@ -6,6 +6,7 @@ namespace OnlineShop.Application.Order.Commands.AddOrder;
 using AutoMapper;
 using MediatR;
 using OnlineShop.Domain.Entities.Orders;
+using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Events;
 using OnlineShop.Domain.Interfaces;
 
@@ -26,9 +27,8 @@ public class AddOrderCommandHandler : IRequestHandler<AddOrderCommand>
 
         foreach(var item in request.Items)
         {
-            var orderItem = _mapper.Map<OrderItem>(item);
-
-            order.AddOrderItem(orderItem.Product, orderItem.ProductPrice, orderItem.NumberOfProducts);
+            var product = _mapper.Map<Product>(item.Product);
+            order.AddOrderItem(product, item.ProductPrice, item.NumberOfProducts);
         }
 
         await _orderRepository.Add(order, cancellationToken);

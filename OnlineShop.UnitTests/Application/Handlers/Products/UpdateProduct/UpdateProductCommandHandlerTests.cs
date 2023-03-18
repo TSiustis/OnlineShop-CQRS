@@ -26,7 +26,7 @@ public class UpdateProductCommandHandlerTests
         var command = new UpdateProductCommand(productInputDto);
 
         _productWriteRepositoryMock
-            .Setup(call => call.Update(It.IsAny<Product>(), It.IsAny<CancellationToken>()))
+            .Setup(call => call.Update(It.IsAny<Product>()))
             .Verifiable();
 
         _productWriteRepositoryMock
@@ -40,7 +40,7 @@ public class UpdateProductCommandHandlerTests
 
         // Assert
         _productWriteRepositoryMock.Verify(
-            call => call.Update(It.IsAny<Product>(), It.IsAny<CancellationToken>()),
+            call => call.Update(It.IsAny<Product>()),
             Times.Once);
 
         _productWriteRepositoryMock.Verify(

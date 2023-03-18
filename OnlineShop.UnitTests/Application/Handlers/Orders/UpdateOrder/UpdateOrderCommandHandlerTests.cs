@@ -36,21 +36,21 @@ public class UpdateOrderCommandHandlerTests
         var command = new UpdateOrderCommand(orderInputDto);
 
         _orderWriteRepositoryMock
-            .Setup(call => call.Update(It.IsAny<Order>(), It.IsAny<CancellationToken>()))
+            .Setup(call => call.Update(It.IsAny<Order>()))
             .Verifiable();
 
         _orderWriteRepositoryMock
             .Setup(call => call.SaveChanges(default))
             .Verifiable();
 
-        var sut = new UpdateOrderCommandHandler(_orderWriteRepositoryMock.Object, _mapper);
+        var sut = new UpdateOrderCommandHandler(_orderWriteRepositoryMock.Object);
 
         // Act
         await sut.Handle(command, CancellationToken.None);
 
         // Assert
         _orderWriteRepositoryMock.Verify(
-            call => call.Update(It.IsAny<Order>(), It.IsAny<CancellationToken>()),
+            call => call.Update(It.IsAny<Order>()),
             Times.Once);
 
         _orderWriteRepositoryMock.Verify(
