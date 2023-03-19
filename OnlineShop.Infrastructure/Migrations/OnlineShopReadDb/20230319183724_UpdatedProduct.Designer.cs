@@ -3,21 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
 
 #nullable disable
 
-namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
+namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 {
-    [DbContext(typeof(OnlineShopWriteDbContext))]
-    partial class OnlineShopWriteDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(OnlineShopReadDbContext))]
+    [Migration("20230319183724_UpdatedProduct")]
+    partial class UpdatedProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("write")
+                .HasDefaultSchema("read")
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -49,7 +51,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", "write");
+                    b.ToTable("Customers", "read");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Orders.Order", b =>
@@ -66,7 +68,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
                     b.Property<DateTimeOffset>("OrderedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetimeoffset")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 3, 19, 18, 37, 46, 915, DateTimeKind.Unspecified).AddTicks(7130), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 3, 19, 18, 37, 24, 462, DateTimeKind.Unspecified).AddTicks(8397), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<byte>("PaymentType")
                         .ValueGeneratedOnAdd()
@@ -83,7 +85,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders", "write");
+                    b.ToTable("Orders", "read");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Orders.OrderItem", b =>
@@ -101,7 +103,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem", "write");
+                    b.ToTable("OrderItem", "read");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Products.Product", b =>
@@ -138,7 +140,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", "write");
+                    b.ToTable("Products", "read");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Customers.Customer", b =>
@@ -166,7 +168,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 
                             b1.HasKey("CustomerId");
 
-                            b1.ToTable("Customers", "write");
+                            b1.ToTable("Customers", "read");
 
                             b1.WithOwner()
                                 .HasForeignKey("CustomerId");
@@ -201,7 +203,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders", "write");
+                            b1.ToTable("Orders", "read");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");

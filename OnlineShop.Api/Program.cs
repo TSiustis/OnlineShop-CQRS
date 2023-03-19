@@ -110,6 +110,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var onlineShopReadDbContext = scope.ServiceProvider.GetRequiredService<OnlineShopReadDbContext>();
+    onlineShopReadDbContext.Database.Migrate();
+
+    var onlineShopWriteDbContext = scope.ServiceProvider.GetRequiredService<OnlineShopWriteDbContext>();
+    onlineShopWriteDbContext.Database.Migrate();
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
