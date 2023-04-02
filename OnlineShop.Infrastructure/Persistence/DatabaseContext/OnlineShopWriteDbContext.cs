@@ -1,13 +1,13 @@
 ﻿namespace OnlineShop.Infrastructure.Persistence.DatabaseContext;
 
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.Domain.Common.Interfaces;
-using OnlineShop.Domain.Entities.Customers;
-using OnlineShop.Domain.Entities.Orders;
-using OnlineShop.Domain.Entities.Products;
-using OnlineShop.Domain.Interfaces;
-using OnlineShop.Infrastructure.Persistence.Constants;
-using OnlineShop.Infrastructure.Persistence.EntityConfigurations;
+using Domain.Common.Interfaces;
+using Domain.Entities.Customers;
+using Domain.Entities.Orders;
+using Domain.Entities.Products;
+using Domain.Interfaces;
+using Constants;
+using EntityConfigurations;
 
 public class OnlineShopWriteDbContext : DbContext
 {

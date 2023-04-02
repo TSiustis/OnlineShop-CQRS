@@ -2,9 +2,9 @@
 
 using AutoFixture;
 using Moq;
-using OnlineShop.Domain.Interfaces;
+using Domain.Interfaces;
 using Xunit;
-using OnlineShop.Domain.Entities.Customers;
+using Domain.Entities.Customers;
 using AutoMapper;
 using OnlineShop.Application.Profiles;
 using FluentAssertions;

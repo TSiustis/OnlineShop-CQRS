@@ -2,13 +2,11 @@
 
 using AutoFixture;
 using Moq;
-using OnlineShop.Domain.Interfaces;
+using Domain.Interfaces;
 using Xunit;
-using OnlineShop.Domain.Entities.Customers;
+using Domain.Entities.Customers;
 using OnlineShop.Application.Customer.Dto;
 using OnlineShop.Application.Customer.Commands.UpdateCustomer;
-using AutoMapper;
-using OnlineShop.Application.Profiles;
 
 public class UpdateCustomerCommandHandlerTests
 {

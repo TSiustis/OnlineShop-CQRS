@@ -2,7 +2,7 @@
 
 using AutoFixture;
 using Moq;
-using OnlineShop.Domain.Interfaces;
+using Domain.Interfaces;
 using Xunit;
 using OnlineShop.Domain.Entities.Orders;
 using OnlineShop.Application.Order.Commands.AddOrder;

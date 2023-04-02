@@ -21,7 +21,7 @@ public class GetOrderQueryHandlerTests
         _orderReadRepositoryMock = new Mock<IReadRepository<Order>>();
         var mockMapper = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile(new OrderProfile()); //your automapperprofile 
+            cfg.AddProfile(new OrderProfile()); 
         });
         _mapper = mockMapper.CreateMapper();
     }

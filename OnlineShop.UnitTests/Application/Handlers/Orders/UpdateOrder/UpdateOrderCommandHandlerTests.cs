@@ -21,7 +21,7 @@ public class UpdateOrderCommandHandlerTests
         _orderWriteRepositoryMock = new Mock<IWriteRepository<Order>>();
         var mockMapper = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile(new OrderProfile()); //your automapperprofile 
+            cfg.AddProfile(new OrderProfile()); 
         });
         _mapper = mockMapper.CreateMapper();
     }

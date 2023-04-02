@@ -1,23 +1,20 @@
-﻿namespace OnlineShop.UnitTests.Application.Handlers.Customer;
-
-using AutoFixture;
+﻿using AutoFixture;
 using Moq;
-using OnlineShop.Domain.Interfaces;
-using Xunit;
-using OnlineShop.Domain.Entities.Customers;
 using OnlineShop.Application.Customer.Commands.AddCustomer;
 using OnlineShop.Application.Customer.Dto;
-using AutoMapper;
-using OnlineShop.Application.Profiles;
+using OnlineShop.Domain.Interfaces;
+using Xunit;
+
+namespace OnlineShop.UnitTests.Application.Handlers.Customer.AddCustomer;
 
 public class AddCustomerCommandHandlerTests
 {
-    private readonly Mock<IWriteRepository<Customer>> _customerWriteRepositoryMock;
+    private readonly Mock<IWriteRepository<Domain.Entities.Customers.Customer>> _customerWriteRepositoryMock;
     private readonly Fixture _fixture = new ();
 
     public AddCustomerCommandHandlerTests()
     {
-        _customerWriteRepositoryMock = new Mock<IWriteRepository<Customer>>();
+        _customerWriteRepositoryMock = new Mock<IWriteRepository<Domain.Entities.Customers.Customer>>();
     }
 
 
@@ -31,7 +28,7 @@ public class AddCustomerCommandHandlerTests
         var command = new AddCustomerCommand(customerInputDto);
 
         _customerWriteRepositoryMock
-            .Setup(call => call.Add(It.IsAny<Customer>(), It.IsAny<CancellationToken>()))
+            .Setup(call => call.Add(It.IsAny<Domain.Entities.Customers.Customer>(), It.IsAny<CancellationToken>()))
             .Verifiable();
 
         _customerWriteRepositoryMock
@@ -46,7 +43,7 @@ public class AddCustomerCommandHandlerTests
 
         // Assert
         _customerWriteRepositoryMock.Verify(
-            call => call.Add(It.IsAny<Customer>(), It.IsAny<CancellationToken>()),
+            call => call.Add(It.IsAny<Domain.Entities.Customers.Customer>(), It.IsAny<CancellationToken>()),
             Times.Once);
 
         _customerWriteRepositoryMock.Verify(

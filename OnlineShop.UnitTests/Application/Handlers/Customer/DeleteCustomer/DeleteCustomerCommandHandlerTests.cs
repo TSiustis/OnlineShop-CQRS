@@ -1,9 +1,9 @@
 ﻿namespace OnlineShop.UnitTests.Application.Handlers.Customer.DeleteCustomer;
 
 using Moq;
-using OnlineShop.Domain.Interfaces;
+using Domain.Interfaces;
 using Xunit;
-using OnlineShop.Domain.Entities.Customers;
+using Domain.Entities.Customers;
 using OnlineShop.Application.Customer.Commands.DeleteCustomer;
 
 public class DeleteCustomerCommandHandlerTests

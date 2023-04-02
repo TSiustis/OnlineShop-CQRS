@@ -1,7 +1,5 @@
-﻿using AutoFixture;
-using Moq;
+﻿using Moq;
 using OnlineShop.Application.Products.Commands.DeleteProduct;
-using OnlineShop.Application.Products.Dto;
 using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Interfaces;
 using Xunit;
@@ -10,7 +8,6 @@ namespace OnlineShop.UnitTests.Application.Handlers.Products.DeleteProduct;
 public class DeleteProductCommandHandlerTests
 {
     private readonly Mock<IWriteRepository<Product>> _productWriteRepositoryMock;
-    private readonly Fixture _fixture = new();
 
     public DeleteProductCommandHandlerTests()
     {

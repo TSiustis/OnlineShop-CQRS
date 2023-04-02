@@ -4,7 +4,7 @@ using OnlineShop.Application.Customer.Commands.AddCustomer;
 using OnlineShop.Application.Customer.Dto;
 using Xunit;
 
-namespace OnlineShop.UnitTests.Application.Handlers.Customer;
+namespace OnlineShop.UnitTests.Application.Handlers.Customer.AddCustomer;
 
 public class AddCustomerCommandValidatorTests
 {
