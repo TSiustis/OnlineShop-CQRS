@@ -1,4 +1,6 @@
-﻿namespace OnlineShop.Application.Products.Dto;
+﻿using OnlineShop.Domain.Entities.Products;
+
+namespace OnlineShop.Application.Products.Dto;
 public class ProductInputDto
 {
     public int Id { get; set; }
@@ -10,5 +12,7 @@ public class ProductInputDto
 
     public int Stock { get; set; }
 
-    public string Category { get; set; }
+    public Category Category { get; set; }
+
+    public string ImageUri { get; set; }
 }

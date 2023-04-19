@@ -28,7 +28,8 @@ public class AddOrderCommandHandler : IRequestHandler<AddOrderCommand>
         foreach(var item in request.Items)
         {
             var product = _mapper.Map<Product>(item.Product);
-            order.AddOrderItem(product, item.ProductPrice, item.NumberOfProducts);
+            var orderedItem = new ItemOrdered(product.Id, product.Name, product.ImageUri);
+            order.AddOrderItem(orderedItem, item.ProductPrice, item.NumberOfProducts);
         }
 
         await _orderRepository.Add(order, cancellationToken);

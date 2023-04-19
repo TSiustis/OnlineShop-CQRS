@@ -4,22 +4,22 @@ using OnlineShop.Domain.Entities.Products;
 namespace OnlineShop.Domain.Entities.Orders;
 public class OrderItem : Entity
 {
-    public Product Product { get; }
+    public ItemOrdered Item { get; }
 
-    public int NumberOfProducts { get; }
+    public int Units { get; }
     
-    public decimal ProductPrice { get; }
+    public decimal Price { get; }
 
     public  OrderItem()
     {
 
     }
 
-    public OrderItem(Product product, int numberOfProducts, decimal productPrice)
+    public OrderItem(ItemOrdered item, int units, decimal price)
     {
-        Product = product;
-        NumberOfProducts = numberOfProducts;
-        ProductPrice = productPrice;
+        Item = item;
+        Units = units;
+        Price = price;
     }
 
     

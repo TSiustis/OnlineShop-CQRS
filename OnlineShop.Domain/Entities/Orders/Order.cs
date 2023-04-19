@@ -7,10 +7,6 @@ public class Order : Entity, IAggregateRoot, IHasDomainEvent
 {
     public IList<OrderItem> Items { get; set; }
 
-    public DateTimeOffset OrderedAt { get; set; }
-
-    public DateTimeOffset ShippedAt { get; set; }
-
     public Address Address { get; set; }
 
     public OrderStatus Status { get; set; }
@@ -18,6 +14,10 @@ public class Order : Entity, IAggregateRoot, IHasDomainEvent
     public PaymentType PaymentType { get; set; }
 
     public decimal Amount { get; set; }
+
+    public DateTimeOffset OrderedAt { get; set; }
+
+    public DateTimeOffset ShippedAt { get; set; }
 
     protected Order()
     {
@@ -44,8 +44,8 @@ public class Order : Entity, IAggregateRoot, IHasDomainEvent
         Amount = amount;
     }
 
-    public void AddOrderItem(Product product, decimal price, int units = 1)
+    public void AddOrderItem(ItemOrdered item, decimal price, int units = 1)
     {
-        Items.Add(new OrderItem(product, units, price));
+        Items.Add(new OrderItem(item, units, price));
     }
 }

@@ -23,9 +23,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Stock)
             .IsRequired();
 
-        builder.Property(p => p.Category)
-            .IsRequired()
-            .HasMaxLength(50);
+        builder.Property(p => p.ImageUri)
+            .IsRequired();
 
         builder.Ignore(p => p.DomainEvents);
     }

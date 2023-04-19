@@ -11,11 +11,11 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
             .HasKey(o => o.Id);
 
         builder
-            .Property(o => o.ProductPrice)
+            .Property(o => o.Price)
             .IsRequired();
 
         builder
-            .Property(o => o.NumberOfProducts)
+            .Property(o => o.Units)
             .IsRequired();
 
         builder

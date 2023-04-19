@@ -3,6 +3,7 @@
 /// </summary>
 using MediatR;
 using OnlineShop.Application.Products.Dto;
+using OnlineShop.Domain.Entities.Products;
 
 namespace OnlineShop.Application.Products.Commands.UpdateProduct;
 public class UpdateProductCommand : IRequest
@@ -15,7 +16,7 @@ public class UpdateProductCommand : IRequest
         Category= productInputDto.Category;
         Price = productInputDto.Price;
         Stock= productInputDto.Stock;
-
+        ImageUri = productInputDto.ImageUri;
     }
 
     public int Id { get; }
@@ -24,9 +25,11 @@ public class UpdateProductCommand : IRequest
 
     public string Description { get; }
     
-    public string Category { get; }
+    public Category Category { get; }
 
     public decimal Price { get; }
 
     public int Stock { get; }
+
+    public string ImageUri { get; }
 }

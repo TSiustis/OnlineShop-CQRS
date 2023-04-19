@@ -6,7 +6,7 @@ using OnlineShop.Domain.Common;
 
 public class Product : Entity, IAggregateRoot, IHasDomainEvent
 { 
-    public Product(int id, string name, string description, decimal price, int stock, string category)
+    public Product(int id, string name, string description, decimal price, int stock, Category category, string imageUri)
     {
         Id = id;
         Name = name;
@@ -14,6 +14,7 @@ public class Product : Entity, IAggregateRoot, IHasDomainEvent
         Price = price;
         Stock = stock;
         Category = category;
+        ImageUri = imageUri;
     }
 
     public Product()
@@ -44,7 +45,12 @@ public class Product : Entity, IAggregateRoot, IHasDomainEvent
     /// <summary>
     /// Gets or sets the category.
     /// </summary>
-    public string Category { get; set; }
+    public Category Category { get; set; }
+
+    /// <summary>
+    /// Gets or sets the path to the image.
+    /// </summary>
+    public string ImageUri { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the entity has been deleted
