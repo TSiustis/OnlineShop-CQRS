@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OnlineShop.Api;
 using OnlineShop.Api.Filters;
 using OnlineShop.Application;
 using OnlineShop.Application.Events;
@@ -127,4 +128,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase(app);
+
 app.Run();
+
+async Task MigrateDatabase(WebApplication webApplication)
+{
+    using var scope = webApplication.Services.GetService<IServiceScopeFactory>()?.CreateScope();
+    var onlineShopReadDbContext = scope.ServiceProvider.GetRequiredService<OnlineShopReadDbContext>();
+    await onlineShopReadDbContext.Database.MigrateAsync();
+    await SeedData.EnsureSeedData(onlineShopReadDbContext);
+    var onlineShopWriteDbContext = scope.ServiceProvider.GetRequiredService<OnlineShopWriteDbContext>();
+    await onlineShopWriteDbContext.Database.MigrateAsync();
+    await SeedData.EnsureSeedData(onlineShopWriteDbContext);
+}
