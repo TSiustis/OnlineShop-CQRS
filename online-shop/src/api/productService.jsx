@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://localhost:5001/api";
+const baseURL = "https://localhost:5001/api";
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -8,19 +8,22 @@ const apiClient = axios.create({
   },
 });
 
-const getAll = apiClient.get('/products/' )
-  .then(response => {
-    response.data;
-  })
-  .catch(error => {
+const getAll = async () => {
+  try {
+    const response = await apiClient.get('/products/');
+    return response.data;
+  } catch (error) {
     console.error(error);
-  });
+  }
+};
 
-const getById = (id) => apiClient.get('/products/' + {id} )
+
+const getById = (id) => apiClient.get(`/products/${id}`)
   .then(response => {
     response.data;
   })
   .catch(error => {
+    console.log(apiClient.get(`/products/${id}`));
     console.error(error);
   });
 
@@ -38,7 +41,7 @@ const getById = (id) => apiClient.get('/products/' + {id} )
     .catch(error =>
   console.log(error));
 
-const remove = (id) =>  apiClient.delete("/product/" + id)
+const remove = (id) =>  apiClient.delete("/products/" + id)
 .then(response => {
   console.log(response);
 })

@@ -18,6 +18,8 @@ using OnlineShop.Infrastructure.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 // Add services to the container.
 builder.Services.AddAuthentication(options =>
 {
@@ -27,21 +29,21 @@ builder.Services.AddAuthentication(options =>
     
 })
 
-            // Adding Jwt Bearer  
-            .AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                   
-                    ValidateIssuer = false,
-                    ValidateAudience = true,
-                    ValidAudience = "https://localhost:5001/",
-                    ValidIssuer = "https://localhost:5001/",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("abcdefghijklmnopqrstuvwxyz123456"))
-                };
-            });
+    // Adding Jwt Bearer  
+    .AddJwtBearer(options =>
+    {
+        options.SaveToken = true;
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+           
+            ValidateIssuer = false,
+            ValidateAudience = true,
+            ValidAudience = "https://localhost:5001/",
+            ValidIssuer = "https://localhost:5001/",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("abcdefghijklmnopqrstuvwxyz123456"))
+        };
+    });
 builder.Services.AddAuthorization();
 builder.Services.AddDbContext<OnlineShopReadDbContext>(options =>
     {
@@ -49,6 +51,14 @@ builder.Services.AddDbContext<OnlineShopReadDbContext>(options =>
         options.EnableSensitiveDataLogging();
     }
 );
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:5173");
+        });
+});
 
 builder.Services.AddDbContext<OnlineShopWriteDbContext>(options =>
 {
@@ -93,7 +103,7 @@ builder.Services.AddSwaggerGen(option =>
                     Id="Bearer"
                 }
             },
-            new string[]{}
+            Array.Empty<string>()
         }
     });
     // Set the comments path for the Swagger JSON and UI.**
@@ -121,6 +131,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 

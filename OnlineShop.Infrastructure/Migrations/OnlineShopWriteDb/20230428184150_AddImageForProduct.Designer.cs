@@ -3,21 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
 
 #nullable disable
 
-namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
+namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 {
-    [DbContext(typeof(OnlineShopReadDbContext))]
-    partial class OnlineShopReadDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(OnlineShopWriteDbContext))]
+    [Migration("20230428184150_AddImageForProduct")]
+    partial class AddImageForProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("read")
+                .HasDefaultSchema("write")
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -49,7 +51,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", "read");
+                    b.ToTable("Customers", "write");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Orders.Order", b =>
@@ -66,7 +68,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
                     b.Property<DateTimeOffset>("OrderedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetimeoffset")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 4, 28, 18, 41, 37, 789, DateTimeKind.Unspecified).AddTicks(8593), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 4, 28, 18, 41, 50, 153, DateTimeKind.Unspecified).AddTicks(3221), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<byte>("PaymentType")
                         .ValueGeneratedOnAdd()
@@ -83,7 +85,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders", "read");
+                    b.ToTable("Orders", "write");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Orders.OrderItem", b =>
@@ -101,7 +103,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem", "read");
+                    b.ToTable("OrderItem", "write");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Products.Category", b =>
@@ -118,7 +120,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", "read");
+                    b.ToTable("Category", "write");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Products.Product", b =>
@@ -159,7 +161,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", "read");
+                    b.ToTable("Products", "write");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Customers.Customer", b =>
@@ -187,7 +189,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 
                             b1.HasKey("CustomerId");
 
-                            b1.ToTable("Customers", "read");
+                            b1.ToTable("Customers", "write");
 
                             b1.WithOwner()
                                 .HasForeignKey("CustomerId");
@@ -222,7 +224,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders", "read");
+                            b1.ToTable("Orders", "write");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");

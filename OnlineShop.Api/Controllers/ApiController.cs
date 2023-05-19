@@ -6,7 +6,7 @@ using OnlineShop.Api.Filters;
 namespace OnlineShop.Api.Controllers;
 
 [ApiController]
-[Authorize]
+//[Authorize]
 [Produces("application/json")]
 [Route("api/")]
 [ServiceFilter(typeof(ApiExceptionFilterAttribute))]

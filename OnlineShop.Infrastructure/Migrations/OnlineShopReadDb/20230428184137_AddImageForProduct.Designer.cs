@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
 
@@ -11,9 +12,10 @@ using OnlineShop.Infrastructure.Persistence.DatabaseContext;
 namespace OnlineShop.Infrastructure.Migrations.OnlineShopReadDb
 {
     [DbContext(typeof(OnlineShopReadDbContext))]
-    partial class OnlineShopReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230428184137_AddImageForProduct")]
+    partial class AddImageForProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
