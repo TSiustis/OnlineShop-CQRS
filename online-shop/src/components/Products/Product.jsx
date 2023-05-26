@@ -1,39 +1,34 @@
 import PropTypes from 'prop-types';
+import './Product.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { Card } from "react-bootstrap";
 
-function Product(props) {
+function Product(product) {
     return (
-        <div className="col-md-3">
-            <div className = "product-item">
-                {/* <div className = "product_image">
-                    <img src = {productItem.imagePath} alt = "" className = "img-fluid" />
-                </div> */}
-
-                <div className = "product_info">
-                    <h6 className = "product_name">
-                        <div>{props.product.name}</div>
-                    </h6>
-                    {/* <div className = "product_price">
-                        {productItem.price}
-                        <span>{(parseFloat(productItem.price) + 30).toFixed(2)}</span>
-                    </div> */}
-                </div>
-                <div className="add_to_cart_button"
-                onClick = {() => props.addToCart(productItem._id)}>
-                    <div style={{ color: "#ffffff" }}>add to cart</div>
-                </div>
-                <Link to={props.link} className="btn btn-primary">Details</Link>
-            </div>
-        </div>
+        <Card className="my-4 p-3 rounded">
+      <Link to={`/product/${product._id}`}>
+        <Card.Img src={product.imagePath} variant="top" />
+      </Link>
+      <Card.Body>
+        <Link to={`/product/${product._id}`}>
+          <Card.Title as="div">
+            <strong>{product.name}</strong>
+          </Card.Title>
+        </Link>
+        <Card.Text as="h6">
+          <strong>{product.price}$</strong>
+        </Card.Text>
+      </Card.Body>
+    </Card>
     )
 }
 
 Product.propTypes = {
     productItem : PropTypes.object,
     imagePath: PropTypes.string,
+    name: PropTypes.string,
     price: PropTypes.number,
-    addToCart: PropTypes.object,
     _id: PropTypes.number,
   };
 export default Product;

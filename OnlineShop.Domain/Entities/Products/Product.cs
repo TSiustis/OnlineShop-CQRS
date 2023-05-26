@@ -2,7 +2,7 @@
 
 namespace OnlineShop.Domain.Entities.Products;
 
-using OnlineShop.Domain.Common;
+using Common;
 
 public class Product : Entity, IAggregateRoot, IHasDomainEvent
 { 

@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductList from './components/Products/ProductList';
 import CustomNav
  from './components/Nav';
+import ProductPage from './Pages/ProductPage';
 function App() {
   return (
     <>
@@ -16,7 +17,8 @@ function App() {
         <CustomNav/>
           <Routes>
             <Route path ='/'exact element = {<HomePage/>}/>
-            <Route path ='/productList' element = {<ProductList/>}/>
+            <Route path ='/product-list' element = {<ProductList/>}/>
+            <Route path ='/product/:id' element = {<ProductPage/>}/>
           </Routes>
         </BrowserRouter>
     </>

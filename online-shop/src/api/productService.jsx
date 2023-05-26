@@ -9,23 +9,29 @@ const apiClient = axios.create({
 });
 
 const getAll = async () => {
+  var response;
   try {
-    const response = await apiClient.get('/products/');
-    return response.data;
+    response = await apiClient.get('/products/');
   } catch (error) {
     console.error(error);
   }
+  
+  return response.data;
 };
 
 
-const getById = (id) => apiClient.get(`/products/${id}`)
-  .then(response => {
-    response.data;
-  })
-  .catch(error => {
-    console.log(apiClient.get(`/products/${id}`));
+const getById = async (id) => {
+  var response;
+  try{
+    response = await apiClient.get(`/products/${id}`);
+  }catch(error)
+  {
     console.error(error);
-  });
+  }
+  
+  return response.data;
+}
+
 
   const post = (data) => apiClient.post("/products", data)
     .then(response =>{
