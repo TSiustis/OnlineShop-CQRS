@@ -1,9 +1,0 @@
-#root {
-    width: 100vh;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
-  html, body, #root, #app, #app>div {
-    height: 100%
-  }

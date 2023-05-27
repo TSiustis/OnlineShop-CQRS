@@ -12,6 +12,7 @@ const getAll = async () => {
   var response;
   try {
     response = await apiClient.get('/products/');
+    console.log(response);
   } catch (error) {
     console.error(error);
   }

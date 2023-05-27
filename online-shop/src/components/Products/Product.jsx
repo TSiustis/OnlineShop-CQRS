@@ -4,14 +4,15 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 
-function Product(product) {
+function Product({product}) {
+  console.log(product);
     return (
         <Card className="my-4 p-3 rounded">
-      <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.imagePath} variant="top" />
+      <Link to={`/product/${product.id}`}>
+        <Card.Img src={product.imageUri} variant="top" />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product._id}`}>
+        <Link to={`/product/${product.id}`}>
           <Card.Title as="div">
             <strong>{product.name}</strong>
           </Card.Title>

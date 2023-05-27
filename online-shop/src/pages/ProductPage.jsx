@@ -11,6 +11,7 @@ import {
   Form,
 } from "react-bootstrap";
 import productService from "../api/productService";
+import Loading from "../components/Loading";
 
 function ProductPage() {
     const [stock, setStock] = useState(0);
@@ -31,19 +32,20 @@ function ProductPage() {
         .catch(error => console.error(error));
     }, []);
 
-    
+    console.log(product);
     return (
         <>
         {!loading ?
     
-         (<div>Loading...</div>
+         (
+         <Loading/>
          )
          :
     (product && (
           <>
             <Row>
               <Col md={4}>
-                <Image src={product.image} alt={product.name} fluid />
+                <Image src={product.imageUri} alt={product.name} fluid />
               </Col>
               <Col md={5}>
                 <h3>{product.name}</h3>
@@ -69,23 +71,23 @@ function ProductPage() {
                       <Row>
                         <Col>Status:</Col>
                         <Col>
-                          {product.countInStock > 0
+                          {product.stock > 0
                             ? `In stock`
                             : `Out of stock`}
                         </Col>
                       </Row>
                     </ListGroup.Item>
-                    {product.countInStock > 0 && (
+                    {product.stock > 0 && (
                       <ListGroup.Item>
                         <Row>
-                          <Col>Qty</Col>
+                          <Col>Quantity</Col>
                           <Col>
                             <FormControl
                               as="select"
-                              value={qty}
-                              onChange={(e) => setQty(e.target.value)}
+                              value={stock}
+                              onChange={(e) => setStock(e.target.value)}
                             >
-                              {[...Array(product.countInStock).keys()].map(
+                              {[...Array(product.stock).keys()].map(
                                 (x) => (
                                   <option value={x + 1} key={x + 1}>
                                     {x + 1}
@@ -102,7 +104,7 @@ function ProductPage() {
                        // onClick={addToCartHandler}
                         className="btn btn-primary d-block w-100"
                         type="button"
-                        disabled={product.countInStock === 0}
+                        disabled={product.stock === 0}
                       >
                         Add to cart
                       </Button>
