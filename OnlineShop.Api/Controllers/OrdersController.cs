@@ -5,6 +5,7 @@ using OnlineShop.Application.Order.Commands.UpdateOrder;
 using OnlineShop.Application.Order.Dto;
 using OnlineShop.Application.Order.Queries.GetOrder;
 using OnlineShop.Application.Order.Queries.GetOrders;
+using OnlineShop.Domain.Common.Pagination;
 
 namespace OnlineShop.Api.Controllers;
 
@@ -31,10 +32,10 @@ public class OrdersController : ApiController
     /// </summary>
     /// <returns>The list of customers.</returns>
     [HttpGet("orders")]
-    [ProducesResponseType(typeof(OrderDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginatedResult<OrderDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<IList<OrderDto>>> GetOrders()
+    public async Task<ActionResult<PaginatedResult<OrderDto>>> GetOrders(int pageNumber, int pageSize)
     {
         var result = await Mediator.Send(new GetOrdersQuery());
 

@@ -5,7 +5,7 @@ using OnlineShop.Application.Customer.Commands.UpdateCustomer;
 using OnlineShop.Application.Customer.Dto;
 using OnlineShop.Application.Customer.Queries.GetCustomer;
 using OnlineShop.Application.Customer.Queries.GetCustomers;
-using OnlineShop.Domain.Entities.Customers;
+using OnlineShop.Domain.Common.Pagination;
 
 namespace OnlineShop.Api.Controllers;
 
@@ -33,10 +33,10 @@ public class CustomersController : ApiController
     /// </summary>
     /// <returns>The list of customers.</returns>
     [HttpGet("customers")]
-    [ProducesResponseType(typeof(IList<CustomerDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginatedResult<CustomerDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<IList<CustomerDto>>> GetCustomers()
+    public async Task<ActionResult<PaginatedResult<CustomerDto>>> GetCustomers(int pageNumber, int pageSize)
     {
         var result = await Mediator.Send(new GetCustomersQuery());
 

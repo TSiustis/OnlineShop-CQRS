@@ -6,6 +6,8 @@ using OnlineShop.Application.Products.Commands.UpdateProduct;
 using OnlineShop.Application.Products.Dto;
 using OnlineShop.Application.Products.Queries.GetProduct;
 using OnlineShop.Application.Products.Queries.GetProducts;
+using OnlineShop.Domain.Common.Pagination;
+using OnlineShop.Domain.Entities.Products;
 
 namespace OnlineShop.Api.Controllers;
 
@@ -32,12 +34,12 @@ public class ProductsController : ApiController
     /// </summary>
     /// <returns>The list of products.</returns>
     [HttpGet("products")]
-    [ProducesResponseType(typeof(IList<ProductDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginatedResult<ProductDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<IList<ProductDto>>> GetProducts()
+    public async Task<ActionResult<PaginatedResult<ProductDto>>> GetProducts(int pageSize, int pageNumber)
     {
-        var result = await Mediator.Send(new GetProductsQuery());
+        var result = await Mediator.Send(new GetProductsQuery{PageSize = pageSize, PageNumber = pageNumber});
 
         return Ok(result);
     }
