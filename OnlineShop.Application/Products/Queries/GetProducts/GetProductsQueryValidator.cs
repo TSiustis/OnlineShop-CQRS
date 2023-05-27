@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 
-namespace OnlineShop.Application.Customer.Queries.GetCustomers;
-public class GetCustomersQueryValidator : AbstractValidator<GetCustomersQuery>
+namespace OnlineShop.Application.Products.Queries.GetProducts;
+public class GetProductsQueryValidator : AbstractValidator<GetProductsQuery>
 {
-    public GetCustomersQueryValidator()
+    public GetProductsQueryValidator()
     {
         RuleFor(query => query.PageNumber)
             .NotEmpty()
