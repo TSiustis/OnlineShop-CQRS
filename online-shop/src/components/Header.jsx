@@ -1,9 +1,10 @@
 import React from 'react';
 import {Nav, Navbar } from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 import {Link} from 'react-router-dom';
-import "./Nav.css";
+import "./Header.css";
 
-function CustomNav()
+function Header()
 {
     return(
       <div className='container'>
@@ -16,6 +17,11 @@ function CustomNav()
             <Link to="/product-list">Shop</Link>
           </Nav>
           <Nav className = "justify-content-end">
+          <LinkContainer to="/cart">
+              <Nav.Link>
+                <i className="fas fa-shopping-cart"></i> Cart
+              </Nav.Link>
+            </LinkContainer>
             <Nav.Link href="#">Login</Nav.Link>
             <Nav.Link href="#">Sign up</Nav.Link>
           </Nav>
@@ -25,4 +31,4 @@ function CustomNav()
     );
 
 }
-export default CustomNav;
+export default Header;
