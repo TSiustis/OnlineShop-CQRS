@@ -24,6 +24,8 @@ public class PaginatedResult<T>
     public int TotalRecords { get; }
 
     public int TotalPages { get; }
+    public bool HasPrevious => PageNumber > 1;
+    public bool HasNext => PageNumber < TotalPages;
 
 }
 

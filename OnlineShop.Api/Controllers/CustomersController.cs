@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OnlineShop.Application.Customer.Commands.AddCustomer;
 using OnlineShop.Application.Customer.Commands.DeleteCustomer;
 using OnlineShop.Application.Customer.Commands.UpdateCustomer;
@@ -39,6 +40,18 @@ public class CustomersController : ApiController
     public async Task<ActionResult<PaginatedResult<CustomerDto>>> GetCustomers(int pageNumber, int pageSize)
     {
         var result = await Mediator.Send(new GetCustomersQuery());
+
+        var metadata = new
+        {
+            result.TotalRecords,
+            result.PageSize,
+            result.PageNumber,
+            result.TotalPages,
+            result.HasNext,
+            result.HasPrevious
+        };
+
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
         return Ok(result);
     }
