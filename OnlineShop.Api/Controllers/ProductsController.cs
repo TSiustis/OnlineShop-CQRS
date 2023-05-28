@@ -38,9 +38,9 @@ public class ProductsController : ApiController
     [ProducesResponseType(typeof(PaginatedResult<ProductDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<PaginatedResult<ProductDto>>> GetProducts(int pageSize, int pageNumber)
+    public async Task<ActionResult<PaginatedResult<ProductDto>>> GetProducts([FromQuery] int pageNumber, int pageSize, string searchQuery)
     {
-        var result = await Mediator.Send(new GetProductsQuery{PageSize = pageSize, PageNumber = pageNumber});
+        var result = await Mediator.Send(new GetProductsQuery{PageSize = pageSize, PageNumber = pageNumber, SearchQuery = searchQuery});
 
         var metadata = new
         {

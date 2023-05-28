@@ -30,7 +30,7 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, Paginat
         {
             PageSize = request.PageSize,
             PageNumber = request.PageNumber,
-            SearchFilter = GetProductFilter()
+            SearchFilter = GetProductFilter(request)
         };
 
         var products = await _productReadRepository.Get(paginationFilter, cancellationToken);
@@ -38,9 +38,10 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, Paginat
         return _mapper.Map<PaginatedResult<ProductDto>>(products);
     }
 
-    private static Expression<Func<Product, bool>> GetProductFilter()
+    private static Expression<Func<Product, bool>> GetProductFilter(GetProductsQuery request)
     {
         return PredicateBuilder.True<Product>()
-            .IsNotDeleted();
+            .IsNotDeleted()
+            .AndContainsTerm(request.SearchQuery);
     }
 }

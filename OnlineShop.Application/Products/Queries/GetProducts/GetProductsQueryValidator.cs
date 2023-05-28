@@ -11,5 +11,8 @@ public class GetProductsQueryValidator : AbstractValidator<GetProductsQuery>
         RuleFor(query => query.PageSize)
             .NotEmpty()
             .GreaterThan(1);
+        RuleFor(query => query.SearchQuery)
+            .NotEmpty()
+            .NotNull();
     }
 }
