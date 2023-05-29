@@ -1,4 +1,4 @@
-name: SonarCloud
+name: Build and analyze
 on:
   push:
     branches:
@@ -37,8 +37,6 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: Setup MSBuild.exe
-        uses: microsoft/setup-msbuild@v1.0.2
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information, if any
