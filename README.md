@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/TSiustis/OnlineShop-CQRS/workflows/build/badge.svg)](https://github.com/TSiustis/OnlineShop-CQRS/actions/workflows/build.yml)
+[![Actions Status](https://github.com/TSiustis/OnlineShop-CQRS/actions/workflows/build/badge.svg)](https://github.com/TSiustis/OnlineShop-CQRS/actions/workflows/build.yml)
 
 # OnlineShop - .NET 6 Backend
 This is a backend for a fictional shop to hone my skills, particularly in regards to the CQRS pattern.
