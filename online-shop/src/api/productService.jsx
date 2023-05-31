@@ -8,10 +8,10 @@ const apiClient = axios.create({
   },
 });
 
-const getAll = async () => {
+const getAll = async (pageNumber, pageSize) => {
   var response;
   try {
-    response = await apiClient.get('/products/');
+    response = await apiClient.get(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}`);
     console.log(response);
   } catch (error) {
     console.error(error);

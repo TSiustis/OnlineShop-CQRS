@@ -10,15 +10,15 @@ function HomePage(){
 
     useEffect(() => {
         async function fetchData() {
-            var response = await productService.getAll();
+            var response = await productService.getAll(1,5);
             console.log(response);
             return response;
         }
 
         fetchData()
-        .then((data) => {
-            console.log(data);
-            setProductList(data);
+        .then((response) => {
+            console.log(response);
+            setProductList(response.data);
             setLoading(true);
         })
         .catch(error => console.error(error));
