@@ -11,6 +11,7 @@ const apiClient = axios.create({
 const getAll = async (pageNumber, pageSize) => {
   var response;
   try {
+    console.log(`page number: ${pageNumber}, ${pageSize}`);
     response = await apiClient.get(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}`);
     console.log(response);
   } catch (error) {

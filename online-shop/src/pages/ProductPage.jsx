@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Row,
@@ -10,113 +11,97 @@ import {
   FormControl,
   Form,
 } from "react-bootstrap";
-import productService from "../api/productService";
-import Loading from "../components/Loading";
+import { listProductDetails } from "../redux/actions/productActions";
 
 function ProductPage() {
-    const [stock, setStock] = useState(0);
-    const [product, setProduct] = useState({});
-    const [loading, setLoading] = useState(false);
-    let {id} = useParams();
-
-    useEffect(() => {
-        async function fetchData() {
-            var response = await productService.getById(id);
-            return response;
-        }
-        fetchData()
-        .then((data) => {
-            setProduct(data);
-            setLoading(true);
-        })
-        .catch(error => console.error(error));
-    }, []);
-
-    console.log(product);
-    return (
-        <>
-        {!loading ?
+    let navigate = useNavigate();
+    const dispatch = useDispatch();
+    let params = useParams();
     
-         (
-         <Loading/>
-         )
-         :
-    (product && (
-          <>
-            <Row>
-              <Col md={4}>
-                <Image src={product.imageUri} alt={product.name} fluid />
-              </Col>
-              <Col md={5}>
-                <h3>{product.name}</h3>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-                  <ListGroup.Item>
-                    Description: {product.description}
-                  </ListGroup.Item>
-                </ListGroup>
-              </Col>
-              <Col md={3}>
-                <Card>
+    const [stock, setStock] = useState(0);
+    const productDetails = useSelector((state) => state.productDetails);
+    const { product, loading, error } = productDetails;
+  console.log(productDetails);
+    useEffect(() => {
+      if (error) {
+        navigate("/");
+      }
+      dispatch(listProductDetails(params.id));
+    }, [dispatch, params.id]);
+  
+
+   
+    return (
+      <>
+                <Row>
+                <Col md={4}>
+                  <Image src={product.imageUri} alt={product.name} fluid rounded />
+                </Col>
+
+                <Col md={5} className="my-auto">
+                  <h3 className="my-3">{product.name}</h3>
                   <ListGroup variant="flush">
                     <ListGroup.Item>
-                      <Row>
-                        <Col>Price:</Col>
-                        <Col>
-                          <strong>${product.price}</strong>
-                        </Col>
-                      </Row>
+                      <h4>Price: <span className="text-primary">${product.price}</span></h4>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Row>
-                        <Col>Status:</Col>
-                        <Col>
-                          {product.stock > 0
-                            ? `In stock`
-                            : `Out of stock`}
-                        </Col>
-                      </Row>
+                      <h4>Description:</h4>
+                      <p>{product.description}</p>
                     </ListGroup.Item>
-                    {product.stock > 0 && (
+                  </ListGroup>
+                </Col>
+
+                <Col md={3}>
+                  <Card className="my-3 p-3">
+                    <ListGroup variant="flush">
                       <ListGroup.Item>
                         <Row>
-                          <Col>Quantity</Col>
+                          <Col>Price:</Col>
                           <Col>
-                            <FormControl
-                              as="select"
-                              value={stock}
-                              onChange={(e) => setStock(e.target.value)}
-                            >
-                              {[...Array(product.stock).keys()].map(
-                                (x) => (
-                                  <option value={x + 1} key={x + 1}>
-                                    {x + 1}
-                                  </option>
-                                )
-                              )}
-                            </FormControl>
+                            <strong>${product.price}</strong>
                           </Col>
                         </Row>
                       </ListGroup.Item>
-                    )}
-                    <ListGroup.Item>
-                      <Button
-                       // onClick={addToCartHandler}
-                        className="btn btn-primary d-block w-100"
-                        type="button"
-                        disabled={product.stock === 0}
-                      >
-                        Add to cart
-                      </Button>
-                    </ListGroup.Item>
-                  </ListGroup>
-                </Card>
-              </Col>
-            </Row>
-            </>
-            )
-    )}
-    </>
-    )         
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Status:</Col>
+                          <Col>
+                            {product.stock > 0 ? <span className="text-success">In stock</span> : <span className="text-danger">Out of stock</span>}
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                      {product.stock > 0 && (
+                        <ListGroup.Item>
+                          <Row>
+                            <Col>Quantity</Col>
+                            <Col>
+                              <FormControl as="select" value={stock} onChange={(e) => setStock(e.target.value)}>
+                                {[...Array(product.stock).keys()].map((x) => (
+                                  <option value={x + 1} key={x + 1}>
+                                    {x + 1}
+                                  </option>
+                                ))}
+                              </FormControl>
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      )}
+                      <ListGroup.Item>
+                        <Button
+                          // onClick={addToCartHandler}
+                          className="btn btn-primary d-block w-100"
+                          type="button"
+                          disabled={product.stock === 0}
+                        >
+                          Add to cart
+                        </Button>
+                      </ListGroup.Item>
+                    </ListGroup>
+                  </Card>
+                </Col>
+              </Row>
+              </>
+  );
 }
+
 export default ProductPage;
