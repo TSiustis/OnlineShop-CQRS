@@ -6,12 +6,15 @@ export const productListReducer = (state = { products: [] }, action) => {
     switch (action.type) {
       case actions.PRODUCT_LIST_REQUEST:
         return {
-            
           ...state,
+          loading: true,
         };
       case actions.PRODUCT_LIST_SUCCESS:
+        console.log(state);
+        console.log(action);
         return {
           ...state,
+          loading: false,
           products: action.payload.data,
           pageNumber: action.payload.pageNumber,
           pageSize: action.payload.pageSize,
@@ -19,6 +22,7 @@ export const productListReducer = (state = { products: [] }, action) => {
       case actions.PRODUCT_LIST_FAIL:
         return {
           ...state,
+          loading: false,
           error: action.payload,
         };
       default:
@@ -44,7 +48,7 @@ export const productDetailsReducer = (
       return {
         ...state,
         loading: false,
-        product: state,
+        product: action.payload,
       };
     case actions.PRODUCT_DETAILS_FAIL:
       return {

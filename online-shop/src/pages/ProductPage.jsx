@@ -12,6 +12,8 @@ import {
   Form,
 } from "react-bootstrap";
 import { listProductDetails } from "../redux/actions/productActions";
+import Loading from "../components/Loading";
+import "./ProductPage.css";
 
 function ProductPage() {
     let navigate = useNavigate();
@@ -20,8 +22,9 @@ function ProductPage() {
     
     const [stock, setStock] = useState(0);
     const productDetails = useSelector((state) => state.productDetails);
+    
     const { product, loading, error } = productDetails;
-  console.log(productDetails);
+  console.log(product);
     useEffect(() => {
       if (error) {
         navigate("/");
@@ -33,9 +36,16 @@ function ProductPage() {
    
     return (
       <>
+       {loading ? (
+        <Loading />
+      ) : error ? (
+        <Message variant="danger"></Message>
+      ) : (
+        product && (
+          <>
                 <Row>
                 <Col md={4}>
-                  <Image src={product.imageUri} alt={product.name} fluid rounded />
+                  <Image src={product.imageUri} alt={product.name} fluid />
                 </Col>
 
                 <Col md={5} className="my-auto">
@@ -100,7 +110,10 @@ function ProductPage() {
                   </Card>
                 </Col>
               </Row>
-              </>
+              </> 
+        )
+      )}
+      </>
   );
 }
 

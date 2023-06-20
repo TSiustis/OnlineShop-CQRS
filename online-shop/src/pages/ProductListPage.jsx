@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Product  from '../components/Products/Product';
-import productService from '../api/productService';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import PaginatedList from '../components/PaginatedList';
@@ -23,10 +22,10 @@ function ProductList()
         dispatch(listProduct(pageNumber, pageSize));
       },[dispatch, pageSize, pageNumber]);
     
-    // if(!loading)
-    // {
-    //     return <div>Loading...</div>
-    // }
+    if(!loading)
+    {
+        return <div>Loading...</div>
+    }
     
     return (
         <>
