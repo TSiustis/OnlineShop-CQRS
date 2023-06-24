@@ -7,10 +7,14 @@ using AutoMapper;
 using MediatR;
 using OnlineShop.Application.Common.CustomExceptions;
 using OnlineShop.Application.Order.Dto;
+using OnlineShop.Domain.Common.Pagination;
 using OnlineShop.Domain.Entities.Orders;
+using OnlineShop.Domain.Entities.Products;
+using OnlineShop.Domain.Helpers;
 using OnlineShop.Domain.Interfaces;
+using System.Linq.Expressions;
 
-public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, IList<OrderDto>>
+public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, PaginatedResult<OrderDto>>
 {
     private readonly IReadRepository<Order> _orderReadRepository;
     private readonly IMapper _mapper;
@@ -20,18 +24,17 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, IList<Order
         _orderReadRepository = orderReadRepository;
         _mapper = mapper;
     }
-    public async Task<IList<OrderDto>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<OrderDto>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
     {
-        List<Order> orders;
-
-        orders = await _orderReadRepository.Get(cancellationToken);
-
-        if (orders == null)
+        var paginationFilter = new PaginationFilter<Order>
         {
-            throw new NotFoundException("There are no orders in the database!");
-        }
+            PageSize = request.PageSize,
+            PageNumber = request.PageNumber,
+        };
 
-        return _mapper.Map<List<OrderDto>>(orders);
+        var orders = await _orderReadRepository.Get(paginationFilter, cancellationToken);
+
+        return _mapper.Map<PaginatedResult<OrderDto>>(orders);
     }
 }
 

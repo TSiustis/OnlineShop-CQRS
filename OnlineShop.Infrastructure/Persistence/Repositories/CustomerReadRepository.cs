@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Domain.Common.Pagination;
 using OnlineShop.Domain.Entities.Customers;
+using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Interfaces;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
 
@@ -34,12 +36,36 @@ public class CustomerReadRepository : IReadRepository<Customer>
 
     public async Task<Customer> Get(int id, CancellationToken cancellationToken)
     {
-        return await _dbContext.Customers.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
-    }
+       
+ return await _dbContext.Customers.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);    }
 
-    public async Task<List<Customer>> Get(CancellationToken cancellationToken)
+    public async Task<PaginatedResult<Customer>> Get(PaginationFilter<Customer> paginationFilter, CancellationToken cancellationToken)
     {
-        return await _dbContext.Customers.ToListAsync(cancellationToken);
+        var searchQuery = _dbContext.Customers
+            .AsNoTracking()
+            .Where(paginationFilter.SearchFilter);
+
+        var count = await searchQuery.CountAsync(cancellationToken);
+
+        if (count <= 0)
+        {
+            return new PaginatedResult<Customer>(
+                new List<Customer>(),
+                paginationFilter.PageNumber,
+                paginationFilter.PageSize,
+                count);
+        }
+
+        var customers = await searchQuery
+            .Skip(paginationFilter.GetSkipCount())
+            .Take(paginationFilter.PageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PaginatedResult<Customer>(
+            customers,
+            paginationFilter.PageNumber,
+            paginationFilter.PageSize,
+            count);
     }
 
     public async Task SaveChanges(CancellationToken cancellationToken)

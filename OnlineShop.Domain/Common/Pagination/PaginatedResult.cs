@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OnlineShop.Application.Common.Pagination;
+﻿namespace OnlineShop.Domain.Common.Pagination;
 
 public class PaginatedResult<T>
 {
@@ -30,6 +24,8 @@ public class PaginatedResult<T>
     public int TotalRecords { get; }
 
     public int TotalPages { get; }
+    public bool HasPrevious => PageNumber > 1;
+    public bool HasNext => PageNumber < TotalPages;
 
 }
 

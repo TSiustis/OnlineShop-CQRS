@@ -1,6 +1,7 @@
-﻿namespace OnlineShop.Domain.Interfaces;
+﻿using OnlineShop.Domain.Common;
+using OnlineShop.Domain.Common.Pagination;
 
-using OnlineShop.Domain.Common;
+namespace OnlineShop.Domain.Interfaces;
 
 public interface IReadRepository<TEntity> where TEntity : Entity
 {
@@ -10,7 +11,8 @@ public interface IReadRepository<TEntity> where TEntity : Entity
 
     Task<TEntity> Get(int id, CancellationToken cancellationToken);
 
-    Task<List<TEntity>> Get(CancellationToken cancellationToken);
+    Task<PaginatedResult<TEntity>> Get(PaginationFilter<TEntity> paginationFilter,
+        CancellationToken cancellationToken);
 
     Task SaveChanges(CancellationToken cancellationToken);
 }

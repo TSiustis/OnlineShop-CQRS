@@ -66,7 +66,7 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
                     b.Property<DateTimeOffset>("OrderedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetimeoffset")
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 3, 19, 18, 37, 46, 915, DateTimeKind.Unspecified).AddTicks(7130), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2023, 4, 28, 18, 41, 50, 153, DateTimeKind.Unspecified).AddTicks(3221), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<byte>("PaymentType")
                         .ValueGeneratedOnAdd()
@@ -104,6 +104,23 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
                     b.ToTable("OrderItem", "write");
                 });
 
+            modelBuilder.Entity("OnlineShop.Domain.Entities.Products.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category", "write");
+                });
+
             modelBuilder.Entity("OnlineShop.Domain.Entities.Products.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -112,10 +129,8 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
@@ -124,6 +139,10 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ImageUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -137,6 +156,8 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products", "write");
                 });
@@ -216,6 +237,17 @@ namespace OnlineShop.Infrastructure.Migrations.OnlineShopWriteDb
                     b.HasOne("OnlineShop.Domain.Entities.Orders.Order", null)
                         .WithMany("Items")
                         .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Entities.Products.Product", b =>
+                {
+                    b.HasOne("OnlineShop.Domain.Entities.Products.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Orders.Order", b =>

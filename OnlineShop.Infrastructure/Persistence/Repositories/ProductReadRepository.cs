@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Domain.Common.Pagination;
 using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Interfaces;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
@@ -32,9 +33,34 @@ public class ProductReadRepository : IReadRepository<Product>
         return await _dbContext.Products.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
-    public async Task<List<Product>> Get(CancellationToken cancellationToken)
+    public async Task<PaginatedResult<Product>> Get(PaginationFilter<Product> paginationFilter,
+        CancellationToken cancellationToken)
     {
-        return await _dbContext.Products.ToListAsync(cancellationToken);
+        var searchQuery = _dbContext.Products
+            .AsNoTracking()
+            .Where(paginationFilter.SearchFilter);
+        
+        var count = await searchQuery.CountAsync(cancellationToken);
+
+        if (count <= 0)
+        {
+            return new PaginatedResult<Product>(
+                new List<Product>(),
+                paginationFilter.PageNumber,
+                paginationFilter.PageSize,
+                count);
+        }
+
+        var products = await searchQuery
+            .Skip(paginationFilter.GetSkipCount())
+            .Take(paginationFilter.PageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PaginatedResult<Product>(
+            products,
+            paginationFilter.PageNumber,
+            paginationFilter.PageSize,
+            count);
     }
 
     public async Task SaveChanges(CancellationToken cancellationToken)

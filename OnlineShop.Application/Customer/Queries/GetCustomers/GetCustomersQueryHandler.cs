@@ -1,13 +1,13 @@
 ﻿namespace OnlineShop.Application.Customer.Queries.GetCustomers;
 
+using OnlineShop.Domain.Common.Pagination;
 using AutoMapper;
 using MediatR;
-using OnlineShop.Application.Common.CustomExceptions;
-using OnlineShop.Application.Customer.Dto;
-using OnlineShop.Domain.Entities.Customers;
-using OnlineShop.Domain.Interfaces;
+using Dto;
+using Domain.Entities.Customers;
+using Domain.Interfaces;
 
-public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, List<CustomerDto>>
+public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, PaginatedResult<CustomerDto>>
 {
     private readonly IReadRepository<Customer> _customerReadRepository;
     private readonly IMapper _mapper;
@@ -18,17 +18,16 @@ public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, List<
         _mapper = mapper;
     }
 
-    public async Task<List<CustomerDto>> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<CustomerDto>> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
     {
-        List<Customer> customers;
-
-        customers = await _customerReadRepository.Get(cancellationToken);
-
-        if (customers == null)
+        var paginationFilter = new PaginationFilter<Customer>
         {
-            throw new NotFoundException("There are no customers in the database!");
-        }
+            PageSize = request.PageSize,
+            PageNumber = request.PageNumber,
+        };
 
-        return _mapper.Map<List<CustomerDto>>(customers);
+        var customers = await _customerReadRepository.Get(paginationFilter, cancellationToken);
+
+        return _mapper.Map<PaginatedResult<CustomerDto>>(customers);
     }
 }
