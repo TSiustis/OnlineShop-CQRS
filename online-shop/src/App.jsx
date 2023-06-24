@@ -18,7 +18,11 @@ function App() {
             <Route path ='/'exact element = {<HomePage/>}/>
             <Route path ='/product-list' element = {<ProductList/>}/>
             <Route path ='/product/:id' element = {<ProductPage/>}/>
-            <Route path="/page/:pageNumber" element={<HomePage />} />
+            <Route
+              path="/search/:keyword/page/:pageNumber"
+              element={<HomePage />}
+            />
+            <Route path="/search/:keyword" element={<HomePage />} />
           </Routes>
         </Layout>
         </BrowserRouter>

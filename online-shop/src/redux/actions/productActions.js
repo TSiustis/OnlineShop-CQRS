@@ -3,13 +3,13 @@ import axios from "axios";
 import productService from "../../api/productService.jsx";
 
 export const listProduct =
-  (pageNumber = 1, pageSize = 5) =>
+  (keyword = "", pageNumber = 1, pageSize = 5) =>
   async (dispatch) => {
     try {
         dispatch({ type: actions.PRODUCT_LIST_REQUEST });
 
         const { data } = await axios.get(
-            `https://localhost:5001/api/products?pageNumber=${pageNumber}&pageSize=${pageSize}`
+            `https://localhost:5001/api/products?keyword=${keyword}&pageNumber=${pageNumber}&pageSize=${pageSize}`
           );
         dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {

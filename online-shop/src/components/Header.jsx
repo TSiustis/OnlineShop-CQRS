@@ -1,7 +1,8 @@
 import "./Header.css";
 import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Navbar, Nav } from "react-bootstrap";
+import SearchBox from "./SearchBox";
 
 function Header() {
 
@@ -19,6 +20,7 @@ function Header() {
                   <i className="fas fa-shopping-cart"></i> Cart
                 </Nav.Link>
               </LinkContainer>
+              <SearchBox />
               {/* {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">
                   <LinkContainer to="profile">
