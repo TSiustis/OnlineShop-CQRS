@@ -15,14 +15,14 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path ='/'exact element = {<HomePage/>}/>
             <Route path ='/product-list' element = {<ProductList/>}/>
             <Route path ='/product/:id' element = {<ProductPage/>}/>
             <Route
-              path="/search/:keyword/page/:pageNumber"
+              path="/search/:searchQuery/page/:pageNumber"
               element={<HomePage />}
             />
-            <Route path="/search/:keyword" element={<HomePage />} />
+            <Route path="/search/:searchQuery" element={<HomePage />} />
+            <Route index path ='/' element = {<HomePage/>}/>
           </Routes>
         </Layout>
         </BrowserRouter>

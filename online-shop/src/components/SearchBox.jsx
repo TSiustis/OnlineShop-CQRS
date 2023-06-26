@@ -4,12 +4,13 @@ import { Form, Button } from "react-bootstrap";
 
 const SearchBox = () => {
   let navigate = useNavigate();
-  const [keyword, setKeyword] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (keyword.trim()) {
-      navigate(`/search/${keyword}`);
+    console.log(`searchQuery: ${searchQuery}`);
+    if (searchQuery.trim()) {
+      navigate(`/search/${searchQuery}`);
     } else {
       navigate("/");
     }
@@ -19,9 +20,9 @@ const SearchBox = () => {
     <Form onSubmit={submitHandler} className="d-flex">
       <Form.Control
         type="text"
-        name="keyword"
+        name="searchQuery"
         placeholder="Search products ..."
-        onChange={(e) => setKeyword(e.target.value)}
+        onChange={(e) => setSearchQuery(e.target.value)}
         className="mr-sm-2 ml-sm-5"
       ></Form.Control>
       <Button variant="info" type="submit" className="p-2">

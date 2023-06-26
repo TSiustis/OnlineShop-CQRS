@@ -11,9 +11,8 @@ function HomePage(){
     let params = useParams();
     const pageNumber = params.pageNumber;
     const pageSize = params.pageSize;
-    const keyword = params.keyword;
+    const searchQuery = params.searchQuery;
 
-    console.log(pageNumber, pageSize);
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.productList);
@@ -21,20 +20,16 @@ function HomePage(){
 
 
     useEffect(() => {
-        dispatch(listProduct(pageNumber, pageSize));
+        dispatch(listProduct(searchQuery, pageNumber, pageSize));
       },[dispatch, pageSize, pageNumber]);
 
     return(
         <>
-        {/* {!keyword && <ProductCarousel />} */}
         <h3>Latest Products</h3>
         <Row>
             {loading ? (
             <Loading />
-            ) : 
-            // error ? (
-            // <Message variant="danger">{error}</Message>
-            // ) :
+            ) :
              (
             products.map((product, index) => (
                 <Col sm={12} md={6} lg={4} xl={3}>
@@ -43,7 +38,7 @@ function HomePage(){
             ))
             )}
         </Row>
-        <PaginatedList pageNumber={pageNo} pageSize={pageS} keyword={keyword ? keyword : ""} />
+        <PaginatedList pageNumber={pageNo} pageSize={pageS} searchQuery={searchQuery ? searchQuery : ""} />
         </>
     );
 }

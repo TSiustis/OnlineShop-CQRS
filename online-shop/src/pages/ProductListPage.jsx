@@ -9,7 +9,9 @@ function ProductList()
 {
     let params = useParams();
     const pageNumber = params.pageNumber || 1;
+    console.log(pageNumber);
     const pageSize = params.pageSize || 10;
+    const searchQuery = params.searchQuery || "";
     console.log(pageNumber, pageSize);
     const dispatch = useDispatch();
 
@@ -18,7 +20,7 @@ function ProductList()
     const { products, pageN, pageS } = productList;
 
     useEffect(() => {
-        dispatch(listProduct(pageNumber, pageSize));
+        dispatch(listProduct(searchQuery, pageNumber, pageSize));
       },[dispatch, pageSize, pageNumber]);
     
     if(!loading)
@@ -44,7 +46,7 @@ function ProductList()
             ))
           )}
         </Row>
-        <PaginatedList pageNumber={pageNumber} pageSize={pages} keyword={keyword ? keyword : ""} />
+        <PaginatedList pageNumber={pageNumber} pageSize={pages} searchQuery={searchQuery ? searchQuery : ""} />
       </>
     )
 }
