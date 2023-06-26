@@ -9,7 +9,9 @@ function ProductList()
 {
     let params = useParams();
     const pageNumber = params.pageNumber || 1;
+    console.log(pageNumber);
     const pageSize = params.pageSize || 10;
+    const searchQuery = params.searchQuery || "";
     console.log(pageNumber, pageSize);
     const dispatch = useDispatch();
 
@@ -17,9 +19,8 @@ function ProductList()
     const productList = useSelector((state) => state.productList);
     const { products, pageN, pageS } = productList;
 
-    console.log(productList);
     useEffect(() => {
-        dispatch(listProduct(pageNumber, pageSize));
+        dispatch(listProduct(searchQuery, pageNumber, pageSize));
       },[dispatch, pageSize, pageNumber]);
     
     if(!loading)
@@ -29,29 +30,24 @@ function ProductList()
     
     return (
         <>
-        <div className="product-container container-fluid">
-            <div className="row">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <div>
-                        <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
-                        <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
-                    </div>
-                </div>
-
-                <div className="row">
-                    {products.map((product) => {
-                        const link = `/details/${product.id}`;
-                        return (
-                            <div className="col-md-4"> 
-                                <Product key={product.id} link={link} product={product} />
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-        </div>
-        <PaginatedList pageNumber={pageN} pageSize={pageS} />
-        </>
+        <Meta title="Clothshop | Home" />
+        {/* {!keyword && <ProductCarousel />} */}
+        <h3>Latest Products</h3>
+        <Row>
+          {loading ? (
+            <Loading />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            products.map((product, index) => (
+              <Col sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} key={index} />
+              </Col>
+            ))
+          )}
+        </Row>
+        <PaginatedList pageNumber={pageNumber} pageSize={pages} searchQuery={searchQuery ? searchQuery : ""} />
+      </>
     )
 }
 export default ProductList;

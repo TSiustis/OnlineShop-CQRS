@@ -1,9 +1,5 @@
-﻿///<summary>
-///Handler for GetProductsQuery.
-/// </summary>
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
-using OnlineShop.Application.Common.CustomExceptions;
 using OnlineShop.Application.Products.Dto;
 using OnlineShop.Domain.Common.Pagination;
 using OnlineShop.Domain.Entities.Products;
@@ -13,6 +9,9 @@ using System.Linq.Expressions;
 using OnlineShop.Application.Products.Extensions;
 
 namespace OnlineShop.Application.Products.Queries.GetProducts;
+///<summary>
+///Handler for GetProductsQuery.
+/// </summary>
 public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, PaginatedResult<ProductDto>>
 {
     private readonly IReadRepository<Product> _productReadRepository;

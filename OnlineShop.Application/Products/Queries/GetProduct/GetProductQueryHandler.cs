@@ -22,9 +22,7 @@ public class GetProductQueryHandler : IRequestHandler<GetProductQuery, ProductDt
 
     public async Task<ProductDto> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        Product product;
-
-        product = await _productReadRepository.Get(request.Id, cancellationToken);
+        var product = await _productReadRepository.Get(request.Id, cancellationToken);
 
         if (product == null)
         {
