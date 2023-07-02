@@ -7,10 +7,9 @@ using OnlineShop.Domain.Helpers;
 using OnlineShop.Domain.Interfaces;
 using System.Linq.Expressions;
 using OnlineShop.Application.Products.Extensions;
-using OnlineShop.Application.Customer.Dto;
-using OnlineShop.Domain.Entities.Customers;
 
 namespace OnlineShop.Application.Products.Queries.GetProducts;
+
 ///<summary>
 ///Handler for GetProductsQuery.
 /// </summary>
