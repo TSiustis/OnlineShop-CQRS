@@ -6,8 +6,10 @@ namespace OnlineShop.Application.Order.Queries.GetOrders;
 using AutoMapper;
 using MediatR;
 using OnlineShop.Application.Common.CustomExceptions;
+using OnlineShop.Application.Customer.Dto;
 using OnlineShop.Application.Order.Dto;
 using OnlineShop.Domain.Common.Pagination;
+using OnlineShop.Domain.Entities.Customers;
 using OnlineShop.Domain.Entities.Orders;
 using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Helpers;
@@ -31,10 +33,12 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, PaginatedRe
             PageSize = request.PageSize,
             PageNumber = request.PageNumber,
         };
-
         var orders = await _orderReadRepository.Get(paginationFilter, cancellationToken);
 
-        return _mapper.Map<PaginatedResult<OrderDto>>(orders);
+        return new PaginatedResult<OrderDto>(_mapper.Map<List<OrderDto>>(orders.Data),
+            paginationFilter.PageNumber,
+            paginationFilter.PageSize,
+            orders.TotalRecords);
     }
 }
 

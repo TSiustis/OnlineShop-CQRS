@@ -59,7 +59,7 @@ public class GetOrderQueryHandlerTests
         var command = new GetOrderQuery(id);
 
         _orderReadRepositoryMock
-            .Setup(call => call.Get(It.IsAny<CancellationToken>()));
+            .Setup(call => call.Get(id, It.IsAny<CancellationToken>()));
 
         var sut = new GetOrderQueryHandler(_orderReadRepositoryMock.Object, _mapper);
 
@@ -69,7 +69,7 @@ public class GetOrderQueryHandlerTests
 
         // Assert
         _orderReadRepositoryMock.Verify(
-            call => call.Get(It.IsAny<CancellationToken>()),
+            call => call.Get(id, It.IsAny<CancellationToken>()),
             Times.Never);
 
         await func.Should().ThrowAsync<NotFoundException>();

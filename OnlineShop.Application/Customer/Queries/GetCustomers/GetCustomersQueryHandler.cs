@@ -28,6 +28,9 @@ public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, Pagin
 
         var customers = await _customerReadRepository.Get(paginationFilter, cancellationToken);
 
-        return _mapper.Map<PaginatedResult<CustomerDto>>(customers);
+        return new PaginatedResult<CustomerDto>(_mapper.Map<List<CustomerDto>>(customers.Data),
+            paginationFilter.PageNumber, 
+            paginationFilter.PageSize,
+            customers.TotalRecords);
     }
 }
