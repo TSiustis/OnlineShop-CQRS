@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Api.Filters;
 
 namespace OnlineShop.Api.Controllers;
 
 [ApiController]
-//[Authorize]
+[Authorize]
 [Produces("application/json")]
 [Route("api/")]
 [ServiceFilter(typeof(ApiExceptionFilterAttribute))]

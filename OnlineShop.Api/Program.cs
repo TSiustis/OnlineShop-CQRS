@@ -15,6 +15,7 @@ using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Interfaces;
 using OnlineShop.Infrastructure.Persistence.DatabaseContext;
 using OnlineShop.Infrastructure.Persistence.Repositories;
+using static System.Net.WebRequestMethods;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,13 +37,14 @@ builder.Services.AddAuthentication(options =>
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new TokenValidationParameters()
         {
-           
             ValidateIssuer = false,
             ValidateAudience = true,
             ValidAudience = "https://localhost:5001/",
             ValidIssuer = "https://localhost:5001/",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("abcdefghijklmnopqrstuvwxyz123456"))
         };
+        options.Audience = "online-shop";
+        options.Authority = "https://localhost:5001";
     });
 builder.Services.AddAuthorization();
 builder.Services.AddDbContext<OnlineShopReadDbContext>(options =>
@@ -140,11 +142,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-MigrateDatabase(app);
+await MigrateDatabase(app);
 
 app.Run();
 
-async Task MigrateDatabase(WebApplication webApplication)
+static async Task MigrateDatabase(IHost webApplication)
 {
     using var scope = webApplication.Services.GetService<IServiceScopeFactory>()?.CreateScope();
     var onlineShopReadDbContext = scope.ServiceProvider.GetRequiredService<OnlineShopReadDbContext>();

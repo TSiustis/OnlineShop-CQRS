@@ -1,4 +1,3 @@
-using Duende.IdentityServer;
 using Identity.Api.Data;
 using Identity.Api.Models;
 using Microsoft.AspNetCore.Identity;

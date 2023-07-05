@@ -30,7 +30,7 @@ public static class Config
     {
             new ApiResource("OnlineShop.Api","Online Shop API")
             {
-                ApiSecrets = { new Secret("secret".Sha256()) },
+                ApiSecrets = { new Secret("SuperSecretPassword".Sha256()) },
                 Scopes = new List<string> { "OnlineShop.Api.full" },
                 UserClaims={
                     JwtClaimTypes.Name,
@@ -48,7 +48,7 @@ public static class Config
                 new Client
                 {
                     ClientId = "online-shop",
-                    ClientName = "online-shop.Client",
+                    ClientName = "OnlineShop.Api",
 
                     RedirectUris = { "https://localhost:7118/signin-oidc", "https://localhost:7118/", "https://localhost:7118/authentication/login-callback", "https://localhost:7065/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc"},
@@ -61,6 +61,24 @@ public static class Config
                     AllowOfflineAccess = true,
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     RefreshTokenExpiration = TokenExpiration.Sliding
-                }
+                },
+                new Client
+                {
+                    ClientId = "online-shop",
+                    ClientName = "OnlineShop.React",
+
+                    RedirectUris = { "https://localhost:7118/signin-oidc", "https://localhost:7118/", "https://localhost:7118/authentication/login-callback", "https://localhost:7065/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc"},
+
+                    RequireClientSecret = false,
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = { "openid", "profile", "email", "OnlineShop.React.full", "role", IdentityServerConstants.LocalApi.ScopeName},
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    RefreshTokenExpiration = TokenExpiration.Sliding
+                },
+
         };
 }
