@@ -22,7 +22,7 @@ public class GetCustomerQueryHandlerTests
         _customerReadRepositoryMock = new Mock<IReadRepository<Customer>>();
         var mockMapper = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile(new CustomerProfile()); //your automapperprofile 
+            cfg.AddProfile(new CustomerProfile());
         });
         _mapper = mockMapper.CreateMapper();
     }
@@ -32,7 +32,7 @@ public class GetCustomerQueryHandlerTests
     public async Task Handle_IfDataInDb_ReturnsAllCustomers()
     {
         // Arrange
-        int id = 1;
+        const int id = 1;
         var customer = _fixture.Build<Customer>()
             .With(cust => cust.Id, id)
             .Create();
@@ -59,11 +59,11 @@ public class GetCustomerQueryHandlerTests
     public async Task Handle_IfNoDataInDb_ThrowsNotFoundException()
     {
         // Arrange
-        int id = 1;
+        const int id = 1;
         var query = new GetCustomerQuery(id);
 
         _customerReadRepositoryMock
-            .Setup(call => call.Get(It.IsAny<CancellationToken>()));
+            .Setup(call => call.Get(id, It.IsAny<CancellationToken>()));
 
         var sut = new GetCustomerQueryHandler(_customerReadRepositoryMock.Object, _mapper);
 
@@ -72,7 +72,7 @@ public class GetCustomerQueryHandlerTests
 
         // Assert
         _customerReadRepositoryMock.Verify(
-            call => call.Get(It.IsAny<CancellationToken>()),
+            call => call.Get(id, It.IsAny<CancellationToken>()),
             Times.Never);
 
         await func.Should().ThrowAsync<NotFoundException>();

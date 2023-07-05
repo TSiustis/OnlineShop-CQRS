@@ -31,7 +31,7 @@ public class GetProductQueryHandlerTests
     public async Task Handle_WhenPayloadIsValid_RetrievesProductFromDatabase()
     {
         // Arrange
-        int id = 1;
+        const int id = 1;
         var product = _fixture.Create<Product>();
 
         var command = new GetProductQuery(id);
@@ -56,12 +56,12 @@ public class GetProductQueryHandlerTests
     public async Task Handle_WhenNoProductsInDatabase_ThrowsNotFoundError()
     {
         // Arrange
-        int id = 1;
+        const int id = 1;
 
         var command = new GetProductQuery(id);
 
         _productReadRepositoryMock
-            .Setup(call => call.Get(It.IsAny<CancellationToken>()));
+            .Setup(call => call.Get(id, It.IsAny<CancellationToken>()));
 
         var sut = new GetProductQueryHandler(_productReadRepositoryMock.Object, _mapper);
 

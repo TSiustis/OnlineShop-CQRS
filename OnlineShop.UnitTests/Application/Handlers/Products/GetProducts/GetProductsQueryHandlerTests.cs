@@ -5,6 +5,8 @@ using Moq;
 using OnlineShop.Application.Common.CustomExceptions;
 using OnlineShop.Application.Products.Queries.GetProducts;
 using OnlineShop.Application.Profiles;
+using OnlineShop.Domain.Common.Pagination;
+using OnlineShop.Domain.Entities.Orders;
 using OnlineShop.Domain.Entities.Products;
 using OnlineShop.Domain.Interfaces;
 using Xunit;
@@ -31,50 +33,25 @@ public class GetProductsQueryHandlerTests
     public async Task Handle_WhenPayloadIsValid_RetrievesProductsFromDatabase()
     {
         // Arrange
-        var product = _fixture.CreateMany<Product>()
+        var products = _fixture.CreateMany<Product>()
             .ToList();
 
-        var command = new GetProductsQuery();
+        var query = new GetProductsQuery();
 
         _productReadRepositoryMock
-            .Setup(call => call.Get(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(product);
+            .Setup(call => call.Get(It.IsAny<PaginationFilter<Product>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new PaginatedResult<Product>(products, 1, 10, 10));
 
         var sut = new GetProductsQueryHandler(_productReadRepositoryMock.Object, _mapper);
 
         // Act
-        await sut.Handle(command, CancellationToken.None);
+        await sut.Handle(query, CancellationToken.None);
 
 
         // Assert
         _productReadRepositoryMock.Verify(
-            call => call.Get(It.IsAny<CancellationToken>()),
+            call => call.Get(It.IsAny<PaginationFilter<Product>>(), It.IsAny<CancellationToken>()),
             Times.Once);
     }
-
-    [Fact]
-    public async Task Handle_WhenNoProductsInDatabase_ThrowsNotFoundError()
-    {
-        // Arrange
-        var product = _fixture.CreateMany<Product>()
-            .ToList();
-
-        var command = new GetProductsQuery();
-
-        _productReadRepositoryMock
-            .Setup(call => call.Get(It.IsAny<CancellationToken>()));
-
-        var sut = new GetProductsQueryHandler(_productReadRepositoryMock.Object, _mapper);
-
-        // Act
-        Func<Task> func = async () =>  await sut.Handle(command, CancellationToken.None);
-
-
-        // Assert
-        _productReadRepositoryMock.Verify(
-            call => call.Get(It.IsAny<CancellationToken>()),
-            Times.Never);
-
-        await func.Should().ThrowAsync<NotFoundException>();
-    }
+    
 }

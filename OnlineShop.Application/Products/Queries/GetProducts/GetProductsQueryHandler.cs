@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using OnlineShop.Application.Products.Extensions;
 
 namespace OnlineShop.Application.Products.Queries.GetProducts;
+
 ///<summary>
 ///Handler for GetProductsQuery.
 /// </summary>
@@ -33,8 +34,11 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, Paginat
         };
 
         var products = await _productReadRepository.Get(paginationFilter, cancellationToken);
-        
-        return _mapper.Map<PaginatedResult<ProductDto>>(products);
+
+        return new PaginatedResult<ProductDto>(_mapper.Map<List<ProductDto>>(products.Data),
+            paginationFilter.PageNumber,
+            paginationFilter.PageSize,
+            products.TotalRecords);
     }
 
     private static Expression<Func<Product, bool>> GetProductFilter(GetProductsQuery request)
